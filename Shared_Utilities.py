@@ -6,6 +6,13 @@ import os
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
+class bcolors:
+    ENDC = '\033[0m'
+    BLUE = '\033[94m'
+    ORNG = '\033[38;5;208m'
+
+# -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
+
 def clearTerminal():
     '''Funzione per stampare il numero di valori nulli per attributo.'''
     
