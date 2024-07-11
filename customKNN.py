@@ -51,7 +51,7 @@ class CustomKNN:
                 #calcolo la distanza del record corrente dai record del training set
                 distanze = euclidean_distances(self.mX, istanza_reshaped).flatten()
                 #prendo gli indici delle k istanze più vicine
-                indici=np.argsort(distanze, axis=0)[:self.k]
+                indici=np.argsort(distanze)[:self.k]
                 #prendo le distanze delle k istanze più vicine 
                 k_distanze = distanze[indici]
                 #calcolo i pesi come l'inverso della distanza
@@ -62,7 +62,6 @@ class CustomKNN:
                 somma_per_classe = {classe: 0 for classe in self.classi}                
                 #calcolo la somma pesata per classe
                 for vicino, peso in zip(k_vicini, pesi):
-                    classe = vicino.item() if isinstance(vicino, np.ndarray) else vicino
                     somma_per_classe[vicino] += peso
                 #prevedo la classe con la somma pesata maggiore
                 pred_y[istanza] = max(somma_per_classe, key=somma_per_classe.get)
