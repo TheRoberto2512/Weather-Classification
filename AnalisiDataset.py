@@ -1,44 +1,45 @@
-from Shared_Utilities import os, pd, plt, sns, StringIO
-from Shared_Utilities import clearTerminal, load_dataset
+from Shared_Utilities import clear_terminal, load_dataset
+from Imports import os, pd, plt, StringIO
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def datasetOverviewMenu():
+def dataset_overview_menu():
     '''Funzione per l'avvio del sotto-menu per fare l'analisi del Dataset.'''
     
-    df = load_dataset(full=True)
-    
+    df = load_dataset(raw=True)
+
     scelta = -1 # scelta dell'utente
     
     while scelta != 0:
+        clear_terminal()
         print_choiches()
         scelta = input()
         
         if scelta == "0":
-            clearTerminal()
+            clear_terminal()
             return
         elif scelta == "1":
-            clearTerminal()
+            clear_terminal()
             print_info(df)
         elif scelta == "2":
-            clearTerminal()
+            clear_terminal()
             print("Prime righe:")
             print(df.head())
             print("\nUltime righe:")
             print(df.tail())
         elif scelta == "3":
-            clearTerminal()
+            clear_terminal()
             print_null_values(df)
         elif scelta == "4":
-            clearTerminal()
+            clear_terminal()
             print("Bilanciamento classe target:")
             plot_class_distrib(df)
         elif scelta == 5:
-            clearTerminal()
+            clear_terminal()
         
-        print("\nPremere qualsiasi tasto per tornare indietro")
+        print("\nPremere INVIO per tornare indietro")
         input()
-        clearTerminal()
+        clear_terminal()
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
@@ -96,4 +97,4 @@ def plot_class_distrib(df):
 
 # DA RIMUOVERE
 if __name__ == '__main__':
-    datasetOverviewMenu()
+    dataset_overview_menu()

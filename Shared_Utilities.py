@@ -1,34 +1,49 @@
-import matplotlib.pyplot as plt
-from io import StringIO
-import seaborn as sns
-import pandas as pd
-import os
+from Imports import pd, os
+from Preprocessing import load_dataset, load_standardized_dataset
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-class bcolors:
-    ENDC = '\033[0m'
-    BLUE = '\033[94m'
-    ORNG = '\033[38;5;208m'
+class Colors():
+    '''Classe per la gestione dei colori nel terminale.'''
+    
+    RESET = '\033[0m'           # colore di default
+    BLUE = '\033[94m'           # colore blu
+    ORNG = '\033[38;5;208m'     # colore arancione
+       
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def clearTerminal():
-    '''Funzione per stampare il numero di valori nulli per attributo.'''
+def clear_terminal():
+    '''Funzione per cancellare la cronologia del terminale.'''
     
     os.system('cls') # il comando cls è per Windows 
     
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def load_dataset(full=False):
-    '''Funzione per caricare il dataset.
-    - full: booleano per decidere se caricare il dataset completo o splittato in X e y.'''
+def chose_dataset():
+    '''Funzione per la scelta del dataset da utilizzare per l'addestramento del modello.'''
     
-    dataset = pd.read_csv('weather_classification_data.csv') # import del dataset
+    scelta = -1 # scelta dell'utente
     
-    if full:
-        return dataset # restituisce il dataset completo
-    else:
-        y = dataset['Weather Type']                # target da predire
-        X = dataset.drop(['Weather Type'], axis=1) # rimozione del target dal dataset
-        return X, y                                # restituisce il dataset splittato in X e y
+    while scelta != "scelto":
+        clear_terminal()
+        print("Scegliere il dataset con cui addestrare il modello:")
+        print("[1] Dataset originale")
+        print("[2] Dataset standardizzato")
+        print("[3] Dataset normalizzato")
+        print("[0] Torna al menu principale")
+        scelta = input()
+        
+        if scelta == "0":
+            return None
+        elif scelta == "1":
+            X, y = load_dataset(one_hot=True)
+            scelta = "scelto"
+        elif scelta == "2":
+            X, y = load_standardized_dataset()
+            scelta = "scelto"
+        elif scelta == "3":
+            # . . .
+            scelta = "scelto"
+
+    return X, y
