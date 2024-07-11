@@ -1,5 +1,4 @@
-from Shared_Utilities import pd
-from Imports import RANDOM_STATE
+from Imports import RANDOM_STATE, pd
 
 # import metodi/classi di preprocessing
 from sklearn.preprocessing import StandardScaler
