@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split, cross_validate
 from sklearn.metrics import accuracy_score
 
 
-
+"""
 def tuningCustomKnn(X_train, y_train, X_test, y_test):
     # Definiamo il range di valori k e la misura di distanza da adottare
     valori_k = [k for k in range(1, 25)]
@@ -28,10 +28,10 @@ def tuningCustomKnn(X_train, y_train, X_test, y_test):
     k_migliore = valori_k[i]
     misura_distanza_migliore = misure_distanze[j]
     print("La miglior accuratezza è %.5f ed è stata ottenuta con la distanza di %s e con k uguale a %d\n"% (acc_val[i,j], misura_distanza_migliore, k_migliore))
+"""
 
-
-
-def customKNNClassifier(X_train, y_train, X_test, y_test, k=3, misura_distanza = "Euclidea"):
+###IMPOSTATO COI VALORI MIGLIORI TROVATI COL TUNING
+def customKNNClassifier(X_train, y_train, X_test, y_test, k=3, misura_distanza = "Manhattan"):
     # Inizializo il modello
     custom_knn = CustomKNN(k, misura_distanza)
 
@@ -40,7 +40,8 @@ def customKNNClassifier(X_train, y_train, X_test, y_test, k=3, misura_distanza =
 
     # Eseguo le predizioni
     predizioni = custom_knn.predict(X_test)
-    custom_knn.score(X_test, y_test)
+    accuracy = custom_knn.score(X_test, y_test)
+    print("%.5f"%(accuracy))
 
 
   
@@ -119,6 +120,10 @@ if __name__ == '__main__':
     print("\nInizio codice\n")
     X, y = load_dataset()
     train_X, test_X, train_y, test_y = train_test_split(X, y, random_state=0, test_size=0.25)
+    #PER TROVARE I MIGLIORI IPERPARAMETRI
+    #tuningCustomKnn(train_X, train_y, test_X, test_y)
 
-    tuningCustomKnn(train_X, train_y, test_X, test_y)
+    #PER TESTARE IL CLASSIFICATORI CON I MIGLIORI IPERPARAMETRI TROVATI COL TUNING
+    customKNNClassifier(train_X, train_y, test_X, test_y, k=7, misura_distanza = "Manhattan")
+
     print("\n\nFine codice\n\n")
