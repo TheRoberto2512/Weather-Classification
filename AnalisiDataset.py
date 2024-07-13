@@ -1,5 +1,6 @@
 from Shared_Utilities import clear_terminal, load_dataset
-from Imports import os, pd, plt, StringIO
+from Imports import os, pd, plt, StringIO, np, sns
+from dython.nominal import associations
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
@@ -34,8 +35,9 @@ def dataset_overview_menu():
             clear_terminal()
             print("Bilanciamento classe target:")
             plot_class_distrib(df)
-        elif scelta == 5:
+        elif scelta == "5":
             clear_terminal()
+            plot_corr_matrix(df)
         
         print("\nPremere INVIO per tornare indietro")
         input()
@@ -95,6 +97,18 @@ def plot_class_distrib(df):
     plt.title("Distribuzione classi target")
     plt.show()
 
+# -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
+
+def plot_corr_matrix(df):
+    '''Funzione per stampare la matrice di correlazione degli attributi.'''
+        
+    df = df.drop(['Weather Type'], axis=1)    
+    
+    complete_correlation = associations(df, figsize=(10,10), cmap="coolwarm")
+    df_complete_corr = complete_correlation['corr']
+    df_complete_corr.dropna(axis=1, how='all').dropna(axis=0, how='all')
+    
+    
 # DA RIMUOVERE
 if __name__ == '__main__':
     dataset_overview_menu()

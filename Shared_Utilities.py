@@ -13,6 +13,7 @@ class Colors():
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
+
 def clear_terminal():
     '''Funzione per cancellare la cronologia del terminale.'''
     

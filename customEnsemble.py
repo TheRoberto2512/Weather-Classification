@@ -73,7 +73,7 @@ def ensemble_bagging_main(dataset, votazione = "hard", pesata = True, bagging = 
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def tuning_bagging(dataset):
+def tuning_iperparametri(dataset):
     '''Funzione per scegliere il migliore sistema di votazione per il classificatore composto custom.'''
     
     # Definiamo il range di valori k e la misura di distanza da adottare
