@@ -1,6 +1,9 @@
 from Shared_Utilities import clear_terminal
 from AnalisiDataset import dataset_overview_menu
 from DecisionTree import decision_tree_main
+from NaiveBayes import naive_bayes_main
+from SVM import SVM_main
+from KNN import KNN_main
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
@@ -23,7 +26,9 @@ def interactiveMenu():
         elif scelta == "2":
             decision_tree_main()
         elif scelta == "3":
-            pass  
+            naive_bayes_main()
+        elif scelta == 4:
+              
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 

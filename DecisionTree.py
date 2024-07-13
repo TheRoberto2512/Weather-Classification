@@ -34,11 +34,13 @@ def decision_tree_main(depth=10, criterion='entropy'):
 def tuning_iperparametri():
     '''Funzione per il tuning degli iperparametri del Decision Tree.'''
     
-    # gli iperparametri da testare sono criterio di split e la profondità dell'albero
+    # gli iperparametri da testare sono il criterio di split e la profondità dell'albero
     criterions = ['gini', 'entropy'] ; all_depths = [i for i in range(1, 26)]
     
     # dataset da caricare e splittare
-    X, y = load_dataset(one_hot=True)
+    X, y = chose_dataset()
+    clear_terminal()
+    
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=RANDOM_STATE)
     
     # definisco una matrice per salvare tutti i risultati delle accuratezze
@@ -53,12 +55,12 @@ def tuning_iperparametri():
             
             accuracies[i][j] = all_scores['test_score'].mean()
             
-            print("Criterio: {} e profondità: {} - Accuratezza: {:.5f}".format(criterion, depth, accuracies[i][j]))
+            print("Criterio: \"{}\", profondità: {} - Accuratezza: {:.5f}".format(criterion, depth, accuracies[i][j]))
             
         print("\n")
     
-    max_index = np.unravel_index(np.argmax(accuracies, axis=None), accuracies.shape)
-    print("Miglior accuratezza: %.5f (Usando criterio \"%s\" e profondita' \"%s\")" % (accuracies[max_index[0]][max_index[1]], criterions[max_index[0]], all_depths[max_index[1]]) )
+    i,j = np.unravel_index(np.argmax(accuracies, axis=None), accuracies.shape)
+    print("Miglior accuratezza: %.5f (Usando criterio \"%s\" e profondita' \"%s\")" % (accuracies[i][j], criterions[i], all_depths[j]) )
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
