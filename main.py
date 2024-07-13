@@ -3,7 +3,8 @@ from AnalisiDataset import dataset_overview_menu
 from DecisionTree import decision_tree_main
 from NaiveBayes import naive_bayes_main
 from SVM import SVM_main
-from customKNN import custom_KNN_main
+from CustomKNN import custom_KNN_main
+from CustomEnsemble import ensemble_bagging_main
 from Shared_Utilities import chose_dataset
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
@@ -27,11 +28,13 @@ def interactiveMenu():
         elif scelta == "2":
             decision_tree_main(chose_dataset())
         elif scelta == "3":
-            naive_bayes_main()
+            naive_bayes_main(chose_dataset())
         elif scelta == "4":
-            SVM_main()
+            SVM_main(chose_dataset())
         elif scelta == "5":
-            custom_KNN_main()
+            custom_KNN_main(chose_dataset())
+        elif scelta == "6":
+            ensemble_bagging_main(chose_dataset())
               
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #

@@ -6,7 +6,7 @@ from io import StringIO                                                 # per la
 import seaborn as sns                                                   # per la matrice di correlazione             
 import pandas as pd                                                     # per i dataframe                
 import numpy as np                                                      # per i calcoli matematici        
-import os                                                               # per la gestione dei file             
+import os                                                               # per la gestione del sistema operativo            
 
 # -- Costanti -- #
 RANDOM_STATE = 1407
