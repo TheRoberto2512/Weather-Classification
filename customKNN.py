@@ -6,7 +6,7 @@ from Preprocessing import load_dataset, RANDOM_STATE
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def custom_KNN_main(k=3, misura_distanza = "Manhattan"):
+def custom_KNN_main(k=3, misura_distanza = "Manhattan", votazione = "hard", ensemble = False):
     '''Funzione per addestrare il KNN in base al dataset scelto.'''
     
     X, y = chose_dataset() # permette di scegliere il dataset tramite un menu interattivo
@@ -18,6 +18,8 @@ def custom_KNN_main(k=3, misura_distanza = "Manhattan"):
     custom_knn.fit(X_train, y_train)
 
     y_pred = custom_knn.predict(X_test)                    # previsioni sul test set
+    
+    if ensemble == True: return y_pred
 
     accuracy = accuracy_score(y_test, y_pred)              # calcolo dell'accuratezza
     report = classification_report(y_test, y_pred)         # report di classificazione
@@ -50,7 +52,7 @@ class CustomKNN(BaseEstimator):
         self.classi = np.unique(y)  # Estraggo le classi presenti nel dataset di training
         self.fittato=True
     
-    def predict(self, X):
+    def predict(self, X, votazione = "hard"):
         '''Metodo per effettuare le previsioni sui dati forniti.'''
         
         #effettuo la previsione solo se il modello è già stato addestrato 
@@ -85,18 +87,21 @@ class CustomKNN(BaseEstimator):
                 for vicino, peso in zip(k_vicini, pesi):
                     somma_per_classe[vicino] += peso
                 #prevedo la classe con la somma pesata maggiore
-                pred_y[istanza] = max(somma_per_classe, key=somma_per_classe.get)
+                if votazione == "hard":
+                    pred_y[istanza] = max(somma_per_classe, key=somma_per_classe.get)
+                elif votazione == "soft":
+                    pred_y[istanza] = somma_per_classe
             
             return pred_y
         else:
             print("E' prima necessario addestrare il modello")
         
-    def score(self, X_test, y_test):
+    def score(self, X_test, y_test, votazione = "hard"):
         '''Metodo per calcolare l'accuratezza del modello.'''
         
         if self.fittato:
            #DIPENDE DA COME VOGLIAMO VALUTARE IL MODELLO
-            pred_y = self.predict(X_test)
+            pred_y = self.predict(X_test, votazione)
             return accuracy_score(y_test, pred_y)
         else:
             print("E' prima necessario addestrare il modello")

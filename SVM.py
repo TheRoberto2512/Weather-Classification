@@ -6,7 +6,7 @@ from Preprocessing import load_dataset
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def SVM_main():
+def SVM_main(votazione = "hard", ensemble = False):
     '''Funzione per addestrare il Naive Bayes in base al dataset scelto.'''
     
     X, y = chose_dataset() # permette di scegliere il dataset tramite un menu interattivo
@@ -18,6 +18,10 @@ def SVM_main():
     SVM.fit(X_train, y_train)
 
     y_pred = SVM.predict(X_test)                    # previsioni sul test set
+    if ensemble & votazione == "hard":
+        return y_pred
+    elif ensemble:
+        return SVM.predict_proba(X_test)
 
     accuracy = accuracy_score(y_test, y_pred)       # calcolo dell'accuratezza
     report = classification_report(y_test, y_pred)  # report di classificazione
