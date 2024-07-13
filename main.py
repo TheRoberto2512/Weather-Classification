@@ -3,7 +3,7 @@ from AnalisiDataset import dataset_overview_menu
 from DecisionTree import decision_tree_main
 from NaiveBayes import naive_bayes_main
 from SVM import SVM_main
-from KNN import KNN_main
+from customKNN import custom_KNN_main
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
@@ -27,7 +27,10 @@ def interactiveMenu():
             decision_tree_main()
         elif scelta == "3":
             naive_bayes_main()
-        elif scelta == 4:
+        elif scelta == "4":
+            SVM_main()
+        elif scelta == "5":
+            custom_KNN_main()
               
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
