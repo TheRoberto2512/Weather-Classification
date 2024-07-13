@@ -1,5 +1,5 @@
-from Imports import pd, os
-from Preprocessing import load_dataset, load_standardized_dataset
+from Imports import pd, os, train_test_split
+from Preprocessing import load_dataset, load_standardized_dataset, RANDOM_STATE
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
@@ -45,5 +45,8 @@ def chose_dataset():
         elif scelta == "3":
             # . . .
             scelta = "scelto"
+         
+    clear_terminal()        
+    (X_train, X_test, y_train, y_test) = train_test_split(X, y, test_size=0.2, random_state=RANDOM_STATE)
 
-    return X, y
+    return (X_train, X_test, y_train, y_test)

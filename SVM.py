@@ -1,24 +1,19 @@
-from Imports import pd, os, np, train_test_split, accuracy_score, classification_report, cross_validate, RANDOM_STATE
-from Shared_Utilities import chose_dataset, clear_terminal
-
+from Imports import np, accuracy_score, classification_report, cross_validate
+from Shared_Utilities import chose_dataset
 from sklearn.svm import SVC
-from Preprocessing import load_dataset
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def SVM_main(votazione = "hard", ensemble = False):
+def SVM_main(dataset, votazione = "hard", ensemble = False):
     '''Funzione per addestrare il Naive Bayes in base al dataset scelto.'''
     
-    X, y = chose_dataset() # permette di scegliere il dataset tramite un menu interattivo
-    
-    clear_terminal()
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=RANDOM_STATE)
+    X_train, X_test, y_train, y_test = dataset 
     
     SVM = SVC(C=1, kernel="linear")
     SVM.fit(X_train, y_train)
 
     y_pred = SVM.predict(X_test)                    # previsioni sul test set
-    if ensemble & votazione == "hard":
+    if ensemble & (votazione == "hard"):
         return y_pred
     elif ensemble:
         return SVM.predict_proba(X_test)
@@ -37,11 +32,8 @@ def SVM_main(votazione = "hard", ensemble = False):
 
 def tuning_iperparametri():
     '''Funzione per il tuning degli iperparametri dell'SVM.'''
-
-    X, y = chose_dataset() # permette di scegliere il dataset tramite un menu interattivo
-    clear_terminal()
     
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=RANDOM_STATE)
+    X_train, _, y_train, _ = chose_dataset()
 
     kernels = ['linear', 'poly', 'rbf', 'sigmoid']
     C_values = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
@@ -60,10 +52,9 @@ def tuning_iperparametri():
             
         print("\n")
         
-    max_index = np.unravel_index(np.argmax(accuracies, axis=None), accuracies.shape)
-    print("\nMiglior accuratezza: %.5f (Usando kernel \"%s\" e C \"%s\")" % (accuracies[max_index[0]][max_index[1]], kernel[max_index[0]], C_values[max_index[1]]) )
+    i, j = np.unravel_index(np.argmax(accuracies, axis=None), accuracies.shape)
+    print("\nMiglior accuratezza: %.5f (Usando kernel \"%s\" e C \"%s\")" % (accuracies[i][j], kernels[i], C_values[j]) )
     
-
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
 if __name__ == '__main__':

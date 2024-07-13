@@ -1,24 +1,20 @@
-from Imports import pd, os, np, train_test_split, accuracy_score, classification_report, cross_validate, RANDOM_STATE
-from Shared_Utilities import chose_dataset, clear_terminal
-
+from Imports import np, accuracy_score, classification_report, cross_validate, RANDOM_STATE
+from Shared_Utilities import chose_dataset
 from sklearn.tree import DecisionTreeClassifier
-from Preprocessing import load_dataset
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def decision_tree_main(depth=10, criterion='entropy', votazione = "hard", ensemble = False):
+def decision_tree_main(dataset, depth=10, criterion='entropy', votazione = "hard", ensemble = False):
     '''Funzione per addestrare il DecisionTree in base al dataset scelto.'''
     
-    X, y = chose_dataset() # permette di scegliere il dataset tramite un menu interattivo
-    
-    clear_terminal()
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=RANDOM_STATE)
+    X_train, X_test, y_train, y_test = dataset 
     
     clf = DecisionTreeClassifier(max_depth=depth, criterion=criterion, random_state=RANDOM_STATE)
     clf.fit(X_train, y_train)
 
     y_pred = clf.predict(X_test)                            # previsioni sul test set
-    if ensemble & votazione == "hard":
+    
+    if ensemble & (votazione == "hard"):
         return y_pred
     elif ensemble:
         return clf.predict_proba(X_test)
@@ -40,12 +36,8 @@ def tuning_iperparametri():
     
     # gli iperparametri da testare sono il criterio di split e la profondità dell'albero
     criterions = ['gini', 'entropy'] ; all_depths = [i for i in range(1, 26)]
-    
-    # dataset da caricare e splittare
-    X, y = chose_dataset()
-    clear_terminal()
-    
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=RANDOM_STATE)
+
+    X_train, _, y_train, _ = chose_dataset()
     
     # definisco una matrice per salvare tutti i risultati delle accuratezze
     accuracies = np.zeros((len(criterions), len(all_depths)))

@@ -1,18 +1,14 @@
-from Imports import np, accuracy_score, train_test_split, cross_validate, classification_report
+from Imports import np, accuracy_score, cross_validate, classification_report
 from sklearn.metrics.pairwise import euclidean_distances, manhattan_distances
-from Shared_Utilities import clear_terminal, chose_dataset
-from sklearn.base import BaseEstimator, ClassifierMixin
-from Preprocessing import load_dataset, RANDOM_STATE
+from Shared_Utilities import chose_dataset
+from sklearn.base import BaseEstimator
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def custom_KNN_main(k=3, misura_distanza = "Manhattan", votazione = "hard", ensemble = False):
+def custom_KNN_main(dataset, k=7, misura_distanza = "Manhattan", votazione = "hard", ensemble = False):
     '''Funzione per addestrare il KNN in base al dataset scelto.'''
     
-    X, y = chose_dataset() # permette di scegliere il dataset tramite un menu interattivo
-    clear_terminal()
-    
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=RANDOM_STATE)
+    X_train, X_test, y_train, y_test = dataset
     
     custom_knn = CustomKNN(k, misura_distanza)
     custom_knn.fit(X_train, y_train)
@@ -34,7 +30,7 @@ def custom_KNN_main(k=3, misura_distanza = "Manhattan", votazione = "hard", ense
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
   
 class CustomKNN(BaseEstimator):
-    '''BaseEstimator e ClassifierMixin utilizzati come superclassi forniscono
+    '''BaseEstimator utilizzati come superclassi forniscono
     una struttura e un'implementazione che rendono il modello 
     compatibile col cross_validate di scikit-learn. '''
     
@@ -112,11 +108,10 @@ def tuning_iperparametri():
     '''Funzione per il tuning degli iperparametri del KNN custom.'''
     
     # Definiamo il range di valori k e la misura di distanza da adottare
-    valori_k = [k for k in range(1, 25)]
+    valori_k = [k for k in range(1, 26)]
     misure_distanze = ["Euclidea", "Manhattan"]
 
-    X, y = load_dataset(one_hot=True)
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=RANDOM_STATE)
+    X_train, _, y_train, _ = chose_dataset()
 
     # Inizializzamo array per memorizzare le varie accuratezze durante il tuning
     acc_val = np.empty((len(valori_k), len(misure_distanze)))
@@ -125,10 +120,10 @@ def tuning_iperparametri():
         for i, k in enumerate(valori_k):
             
                 custom_knn = CustomKNN(k, misura_distanza)
-                cv_accuratezze = cross_validate(estimator=custom_knn, X=X_train, y=y_train, cv=3, n_jobs=6)
+                cv_accuratezze = cross_validate(estimator=custom_knn, X=X_train, y=y_train, cv=10, n_jobs=10)
                 
                 acc_val[i, j] = cv_accuratezze['test_score'].mean()
-                print("Distanza: %s, k = %d - Accuratezza: %.5f"%(misura_distanza, k, acc_val[i,j]))
+                print("Distanza: \"%s\", k = %d - Accuratezza: %.5f"%(misura_distanza, k, acc_val[i,j]))
         print("\n")
     
     i, j = np.unravel_index(np.argmax(acc_val, axis=None), acc_val.shape)
