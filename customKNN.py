@@ -5,7 +5,7 @@ from sklearn.base import BaseEstimator
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def custom_KNN_main(dataset, k=7, misura_distanza = "Manhattan", votazione = "none"):
+def custom_KNN_main(dataset, k=7, misura_distanza="Manhattan", votazione="none"):
     '''
     Funzione per addestrare il KNN in base al dataset scelto.
     
@@ -36,7 +36,7 @@ def custom_KNN_main(dataset, k=7, misura_distanza = "Manhattan", votazione = "no
         print('\nReport sulle performance:')
         print(report)
         
-        print_confusion_matrix(y_test, y_pred)
+        print_confusion_matrix(y_test, y_pred)              # stampa della matrice di confusione
         
         input("\nPremere INVIO per continuare . . .")
         return

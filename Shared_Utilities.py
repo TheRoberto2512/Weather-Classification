@@ -1,7 +1,7 @@
-from Preprocessing import load_dataset, load_standardized_dataset, RANDOM_STATE
+from Preprocessing import load_dataset, load_standardized_dataset, load_smaller_dataset, load_bigger_dataset
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import confusion_matrix
-from Imports import pd, os, train_test_split, plt, sns, np
+from Imports import pd, os, train_test_split, plt, sns, np, RANDOM_STATE
 
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
@@ -33,7 +33,8 @@ def chose_dataset():
         print("Scegliere il dataset con cui addestrare il modello:")
         print("[1] Dataset originale")
         print("[2] Dataset standardizzato")
-        print("[3] Dataset normalizzato")
+        print("[3] Dataset con meno records (50%)")
+        print("[4] Dataset con più records  (200%)")
         print("[0] Torna al menu principale")
         scelta = input()
         
@@ -46,10 +47,14 @@ def chose_dataset():
             X, y = load_standardized_dataset()
             scelta = "scelto"
         elif scelta == "3":
-            # . . .
+            X, y = load_smaller_dataset()
             scelta = "scelto"
+        elif scelta == "4":
+            X, y = load_bigger_dataset()
+            scelta = "scelto"
+            pass
          
-    clear_terminal()        
+    clear_terminal()      
     (X_train, X_test, y_train, y_test) = train_test_split(X, y, test_size=0.2, random_state=RANDOM_STATE)
 
     return (X_train, X_test, y_train, y_test)

@@ -1,5 +1,5 @@
 from Shared_Utilities import clear_terminal, load_dataset
-from Imports import os, pd, plt, StringIO
+from Imports import os, pd, plt, StringIO, sns
 from dython.nominal import associations
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
@@ -38,6 +38,9 @@ def dataset_overview_menu():
         elif scelta == "5":
             clear_terminal()
             plot_corr_matrix(df)
+        elif scelta == "6":
+            clear_terminal()
+            print_boxplot(df)
         
         print("\nPremere INVIO per tornare indietro")
         input()
@@ -54,6 +57,7 @@ def print_choiches():
     print("[3] Visualizzazione del numero di valori nulli per attributo")
     print("[4] Visualizzazione della distribuzione degli elementi nelle classi target")
     print("[5] Matrice di correlazione degli attributi")
+    print("[6] Boxplot per l'analisi degli outliers")
     print("[0] Ritorna al menu principale")
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
@@ -108,7 +112,23 @@ def plot_corr_matrix(df):
     df_complete_corr = complete_correlation['corr']
     df_complete_corr.dropna(axis=1, how='all').dropna(axis=0, how='all')
     
+# -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # 
+
+def print_boxplot(df):
+    '''Funzione per stampare il boxplot per l'analisi degli outliers.'''
     
+    numerical_cols = df.select_dtypes(include='number').columns # solo colonne numeriche
+    _, ax = plt.subplots(2, 4, figsize=(8, 8))                  # subplot 2 righe × 4 colonne
+    ax = ax.flatten()
+    
+    for i, colonna in enumerate(numerical_cols):
+        sns.boxplot(data=df, y=colonna, ax=ax[i])
+        ax[i].set_title(colonna)
+        
+    plt.tight_layout()
+    plt.show()
+
+# -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 # DA RIMUOVERE
 if __name__ == '__main__':
     dataset_overview_menu()

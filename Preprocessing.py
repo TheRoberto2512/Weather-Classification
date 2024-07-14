@@ -1,7 +1,6 @@
-from Imports import RANDOM_STATE, pd
-
-# import metodi/classi di preprocessing
+from Imports import pd, train_test_split, RANDOM_STATE
 from sklearn.preprocessing import StandardScaler
+from imblearn.over_sampling import SMOTE
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
@@ -36,4 +35,43 @@ def load_standardized_dataset():
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
+def load_smaller_dataset(ratio=0.5):
+    '''
+    Funzione per caricare un dataset con meno record.
+    
+    Parametri:
+    - ratio: percentuale di record da restituire (default: 0.5).
+    '''
+    
+    X, y = load_dataset(one_hot=True)
+    
+    X_return, _, y_return, _ = train_test_split(X, y, test_size=ratio, stratify=y)
 
+    return X_return, y_return  # restituisce solamente parte del dataset originale
+
+# -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
+
+def load_bigger_dataset(multiplier=2):
+    '''
+    Funzione per caricare un dataset con più record.
+    
+    Parametri:
+    - multiplier: moltiplicatore per il numero di record.
+    '''
+    
+    X, y = load_dataset(one_hot=True)
+    
+    # in questo caso vogliamo RADDOPPIARE i records per ogni classe
+    dict_smo = {'Rainy': len(X[y == 'Rainy']) * multiplier,
+                'Sunny': len(X[y == 'Sunny']) * multiplier,
+                'Cloudy': len(X[y == 'Cloudy']) * multiplier,
+                'Snowy': len(X[y == 'Snowy']) * multiplier}
+    
+    # i records saranno generati sinteticamente da SMOTE
+    smote = SMOTE(random_state=RANDOM_STATE, sampling_strategy=dict_smo) # creo l'oggetto SMOTE
+    
+    X_over, y_over = smote.fit_resample(X, y) # applico l'oversampling
+    
+    return X_over, y_over
+       
+# -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
