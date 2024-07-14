@@ -22,15 +22,18 @@ def decision_tree_main(dataset, depth=10, criterion="entropy", votazione="none")
     
     clf = DecisionTreeClassifier(max_depth=depth, criterion=criterion, random_state=RANDOM_STATE)
     clf.fit(X_train, y_train)                               # addestramento del modello    
+    classi = clf.classes_
 
     y_pred = clf.predict(X_test)                            # previsioni sul test set
+    accuracy = accuracy_score(y_test, y_pred)               # calcolo dell'accuratezza
+
        
     if votazione == "hard":
-        return y_pred
+        return accuracy, y_pred
     elif votazione == "soft":
-        return clf.predict_proba(X_test)
+        probabilità = clf.predict_proba(X_test)
+        return accuracy, np.array([dict(zip(classi, probs)) for probs in probabilità])
     else:
-        accuracy = accuracy_score(y_test, y_pred)           # calcolo dell'accuratezza
         report = classification_report(y_test, y_pred)      # report di classificazione
 
         print(f'Accuratezza: {accuracy:.3}')

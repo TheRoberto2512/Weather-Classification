@@ -23,13 +23,12 @@ def custom_KNN_main(dataset, k=7, misura_distanza="Manhattan", votazione="none")
     
     custom_knn = CustomKNN(k, misura_distanza)              # inizializzazione del modello
     custom_knn.fit(X_train, y_train)                        # addestramento del modello 
+    y_pred = custom_knn.predict(X_test)                 # previsioni sul test set
+    accuracy = accuracy_score(y_test, y_pred)           # calcolo dell'accuratezza
 
     if votazione != "none": 
-        return custom_knn.predict(X_test, votazione)        # previsioni sul test set calcolate per l'ensemble
+        return accuracy, custom_knn.predict(X_test, votazione)        # previsioni sul test set calcolate per l'ensemble
     else:
-        y_pred = custom_knn.predict(X_test)                 # previsioni sul test set
-        
-        accuracy = accuracy_score(y_test, y_pred)           # calcolo dell'accuratezza
         report = classification_report(y_test, y_pred)      # report di classificazione
 
         print(f'Accuratezza: {accuracy:.3}')
@@ -120,12 +119,15 @@ class CustomKNN(BaseEstimator):
                 # calcolo la somma pesata per classe
                 for vicino, peso in zip(k_vicini, pesi):
                     somma_per_classe[vicino] += peso
+                
                     
                 # prevedo la classe con la somma pesata maggiore
                 if votazione == "hard":
                     pred_y[istanza] = max(somma_per_classe, key=somma_per_classe.get)
                 elif votazione == "soft":
-                    pred_y[istanza] = somma_per_classe
+                    # Normalizzazione dei valori in somma_per_classe per fare in modo che la somma sia 1 (proba)
+                    somma_totale = sum(somma_per_classe.values())
+                    pred_y[istanza] = {classe: valore / somma_totale for classe, valore in somma_per_classe.items()}
             
             return pred_y
         else:
