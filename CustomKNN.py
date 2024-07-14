@@ -1,6 +1,6 @@
 from Imports import np, accuracy_score, cross_validate, classification_report
 from sklearn.metrics.pairwise import euclidean_distances, manhattan_distances
-from Shared_Utilities import chose_dataset, print_confusion_matrix
+from Shared_Utilities import chose_dataset, print_confusion_matrix, Colors
 from sklearn.base import BaseEstimator
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
@@ -23,32 +23,33 @@ def custom_KNN_main(dataset, k=7, misura_distanza="Manhattan", votazione="none")
     
     custom_knn = CustomKNN(k, misura_distanza)              # inizializzazione del modello
     custom_knn.fit(X_train, y_train)                        # addestramento del modello 
-    y_pred = custom_knn.predict(X_test)                 # previsioni sul test set
-    accuracy = accuracy_score(y_test, y_pred)           # calcolo dell'accuratezza
+    y_pred = custom_knn.predict(X_test)                     # previsioni sul test set
+    accuracy = accuracy_score(y_test, y_pred)               # calcolo dell'accuratezza
 
     if votazione != "none": 
-        return accuracy, custom_knn.predict(X_test, votazione)        # previsioni sul test set calcolate per l'ensemble
+        return accuracy, custom_knn.predict(X_test, votazione)
+        # restituisce l'accuratezza e le predizioni o le probabilità di appartenenza ad ogni classe 
     else:
         report = classification_report(y_test, y_pred)      # report di classificazione
 
-        print(f'Accuratezza: {accuracy:.3}')
+        print(f'{Colors.GREEN}Accuratezza{Colors.RESET}: {accuracy:.3}')
         print('\nReport sulle performance:')
         print(report)
         
         print_confusion_matrix(y_test, y_pred)              # stampa della matrice di confusione
         
-        input("\nPremere INVIO per continuare . . .")
+        input(f"\nPremere {Colors.ORNG}INVIO{Colors.RESET} per continuare . . .")
         return
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
   
 class CustomKNN(BaseEstimator):
-    '''
-    BaseEstimator utilizzati come superclassi forniscono una struttura e un'implementazione
+    '''BaseEstimator utilizzati come superclassi forniscono una struttura e un'implementazione
     che rendono il modello compatibile col cross_validate di scikit-learn. '''
     
-    def __init__(self, k=3, misura_distanza="Euclidea"):
-        ''''Metodo costruttore del modello KNN custom.
+    def __init__(self, k=7, misura_distanza="Manhattan"):
+        '''
+        Metodo costruttore del modello KNN custom.
         
         Parametri:
         - k: numero di vicini da considerare (default: 7).
@@ -56,11 +57,11 @@ class CustomKNN(BaseEstimator):
         '''
         self.k = k
         self.misura_distanza = misura_distanza
-        self.fittato=False
+        self.fittato = False
 
     def fit(self, X, y):
         '''
-        Metodo per addestrare il modello KNN.
+        Metodo per addestrare il modello KNN custom.
         
         Parametri:
         X: array di training.
@@ -77,16 +78,16 @@ class CustomKNN(BaseEstimator):
         Metodo per effettuare le previsioni sui dati forniti.
         
         Parametri:
-        X: array di training.
+        X: array di test.
         votazione: tipo di votazione da utilizzare (default: hard).
         '''
         
         # effettuo la previsione solo se il modello è già stato addestrato 
         if self.fittato:
             # creo una np array che conterrà il target previsto per ogni record
-            (istanze,attributi)=X.shape
-            pred_y=np.zeros(istanze, dtype=object)
-            X=X.values
+            (istanze,attributi) = X.shape
+            pred_y = np.zeros(istanze, dtype=object)
+            X = X.values
 
             # ciclo che scorre i record di X e effettua la previsione per ciascun record inserisce il valore pedetto nella lista pred_y
             for istanza in range(istanze):
@@ -119,8 +120,7 @@ class CustomKNN(BaseEstimator):
                 # calcolo la somma pesata per classe
                 for vicino, peso in zip(k_vicini, pesi):
                     somma_per_classe[vicino] += peso
-                
-                    
+                  
                 # prevedo la classe con la somma pesata maggiore
                 if votazione == "hard":
                     pred_y[istanza] = max(somma_per_classe, key=somma_per_classe.get)
@@ -180,7 +180,7 @@ def tuning_iperparametri():
     
     # indice della combinazione di iperparametri con l'accuratezza più alta
     i, j = np.unravel_index(np.argmax(acc_val, axis=None), acc_val.shape)
-    print("Miglior accuratezza: %.5f (Usando distanza di \"%s\" e con k = %d)" % (acc_val[i,j], misure_distanze[j], valori_k[i]) )
+    print(f"Miglior {Colors.GREEN}Accuratezza{Colors.RESET}: %.5f (Usando distanza di \"%s\" e con k = %d)" % (acc_val[i,j], misure_distanze[j], valori_k[i]) )
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 

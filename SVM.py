@@ -1,5 +1,5 @@
 from Imports import np, accuracy_score, classification_report, cross_validate
-from Shared_Utilities import chose_dataset, print_confusion_matrix
+from Shared_Utilities import chose_dataset, print_confusion_matrix, Colors
 from sklearn.svm import SVC
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
@@ -22,7 +22,7 @@ def SVM_main(dataset, C=1, kernel="linear", votazione = "none"):
 
     SVM = SVC(C=C, kernel=kernel, probability=True)         # inizializzazione del modello
     SVM.fit(X_train, y_train)                               # addestramento del modello
-    classi = SVM.classes_
+    classi = SVM.classes_                                   # estrapolazione delle classi              
 
     y_pred = SVM.predict(X_test)                            # previsioni sul test set
     accuracy = accuracy_score(y_test, y_pred)               # calcolo dell'accuratezza
@@ -32,16 +32,17 @@ def SVM_main(dataset, C=1, kernel="linear", votazione = "none"):
     elif votazione == "soft":
         probabilità = SVM.predict_proba(X_test)
         return accuracy, [dict(zip(classi, probs)) for probs in probabilità]
+        # restituisce l'accuratezza e un array di dizionari con le probabilità di appartenenza ad ogni classe
     else:
         report = classification_report(y_test, y_pred)      # report di classificazione
 
-        print(f'Accuratezza: {accuracy:.3}')
+        print(f'{Colors.GREEN}Accuratezza{Colors.RESET}: {accuracy:.3}')
         print('\nReport sulle performance:')
         print(report)
         
-        print_confusion_matrix(y_test, y_pred)
+        print_confusion_matrix(y_test, y_pred)              # stampa della matrice di confusione
         
-        input("\nPremere INVIO per continuare . . .")
+        input(f"\nPremere {Colors.ORNG}INVIO{Colors.RESET} per continuare . . .")
         return
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
@@ -75,7 +76,7 @@ def tuning_iperparametri():
         
     # indice della combinazione di iperparametri con l'accuratezza più alta
     i, j = np.unravel_index(np.argmax(accuracies, axis=None), accuracies.shape)
-    print("\nMiglior accuratezza: %.5f (Usando kernel \"%s\" e C \"%s\")" % (accuracies[i][j], kernels[i], C_values[j]) )
+    print(f"\nMiglior {Colors.GREEN}Accuratezza{Colors.RESET}: %.5f (Usando kernel \"%s\" e C \"%s\")" % (accuracies[i][j], kernels[i], C_values[j]) )
     
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 

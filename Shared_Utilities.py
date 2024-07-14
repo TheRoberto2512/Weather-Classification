@@ -11,6 +11,8 @@ class Colors():
     RESET = '\033[0m'           # colore di default
     BLUE = '\033[94m'           # colore blu
     ORNG = '\033[38;5;208m'     # colore arancione
+    RED = '\033[91m'            # colore rosso
+    GREEN = '\033[92m'          # colore verde
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
@@ -29,13 +31,13 @@ def chose_dataset():
     while scelta != "scelto":
         clear_terminal()
         print("Scegliere il dataset con cui addestrare il modello:")
-        print("[1] Dataset originale")
-        print("[2] Dataset standardizzato")
-        print("[3] Dataset con meno records (50%)")
-        print("[4] Dataset con più records  (200%)")
-        print("[5] Dataset con feature selection")
-        print("[6] Dataset con preprocessing personalizzato")
-        print("[0] Torna al menu principale")
+        print(f"{Colors.BLUE}[1]{Colors.RESET} Dataset originale")
+        print(f"{Colors.BLUE}[2]{Colors.RESET} Dataset standardizzato")
+        print(f"{Colors.BLUE}[3]{Colors.RESET} Dataset con meno records (50%)")
+        print(f"{Colors.BLUE}[4]{Colors.RESET} Dataset con più records  (200%)")
+        print(f"{Colors.BLUE}[5]{Colors.RESET} Dataset con feature selection")
+        print(f"{Colors.BLUE}[6]{Colors.RESET} Dataset con preprocessing personalizzato")
+        print(f"{Colors.ORNG}[0]{Colors.RESET} Torna al menu principale")
         scelta = input()
         
         if scelta == "0":
@@ -125,15 +127,20 @@ def print_confusion_matrix(y_true, y_pred):
     - y_pred: array di classi predette.
     '''
     
+    # codifica delle classi
     le = LabelEncoder()
     le.fit(np.concatenate((y_true, y_pred), axis=None))
     class_names = le.classes_
     
-    cm = confusion_matrix(y_true, y_pred)
+    cm = confusion_matrix(y_true, y_pred) # calcola la matrice di confusione
     
     plt.figure(figsize=(10, 7))
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=class_names, yticklabels=class_names)
+    
     plt.xlabel('Classi Predette')
     plt.ylabel('Classi Reali')
+    
     plt.title('Matrice di confusione')
     plt.show()
+    
+# -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #

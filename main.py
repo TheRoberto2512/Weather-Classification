@@ -1,11 +1,10 @@
-from Shared_Utilities import clear_terminal
+from Shared_Utilities import clear_terminal, chose_dataset, Colors
 from AnalisiDataset import dataset_overview_menu
+from CustomEnsemble import ensemble_bagging_main
 from DecisionTree import decision_tree_main
 from NaiveBayes import naive_bayes_main
-from SVM import SVM_main
 from CustomKNN import custom_KNN_main
-from CustomEnsemble import ensemble_bagging_main
-from Shared_Utilities import chose_dataset
+from SVM import SVM_main
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
@@ -46,20 +45,19 @@ def interactiveMenu():
             if dataset is not None:
                 ensemble_bagging_main(dataset)
               
-
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
 def printLogo():
     '''Funzione per stampare il logo del progetto.'''
     
-    print("▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄")
-    print("▀▄     ▄▄         ▄▄       ▄▄       ▀▄")
-    print("▀▄     ███▄     ▄███       ██       ▀▄")
-    print("▀▄    ██  ▀█▄ ▄█▀  ██      ██       ▀▄")
-    print("▀▄   ██     ▀█▀     ██     ██       ▀▄")
-    print("▀▄  ██               ██    ██▄▄▄▄▄▄ ▀▄")
-    print("▀▄ ▀▀                 ▀▀   ▀▀▀▀▀▀▀▀ ▀▄")
-    print("▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄")
+    print(f"▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄")
+    print(f"▀▄     {Colors.BLUE}▄▄         ▄▄       ▄▄      {Colors.RESET} ▀▄")
+    print(f"▀▄     {Colors.BLUE}███▄     ▄███       ██      {Colors.RESET} ▀▄")
+    print(f"▀▄    {Colors.BLUE}██  ▀█▄ ▄█▀  ██      ██      {Colors.RESET} ▀▄")
+    print(f"▀▄   {Colors.BLUE}██     ▀█▀     ██     ██      {Colors.RESET} ▀▄")
+    print(f"▀▄  {Colors.BLUE}██               ██    ██▄▄▄▄▄▄{Colors.RESET} ▀▄")
+    print(f"▀▄ {Colors.BLUE}▀▀                 ▀▀   ▀▀▀▀▀▀▀▀{Colors.RESET} ▀▄")
+    print(f"▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄▀▄")
     print("\n")
     
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
@@ -68,13 +66,13 @@ def printChoiches():
     '''Funzione per stampare le scelte possibili per l'utente.'''
     
     print("Scegliere un'opzione:")
-    print("[1] Analisi del dataset")
-    print("[2] Decision Tree")
-    print("[3] Naive Bayes")
-    print("[4] SVM")
-    print("[5] KNN [Custom]")
-    print("[6] Classificatore Multiplo")
-    print("[0] Esci dal programma")
+    print(f"{Colors.BLUE}[1]{Colors.RESET} Analisi del dataset")
+    print(f"{Colors.BLUE}[2]{Colors.RESET} Decision Tree")
+    print(f"{Colors.BLUE}[3]{Colors.RESET} Naive Bayes")
+    print(f"{Colors.BLUE}[4]{Colors.RESET} SVM")
+    print(f"{Colors.BLUE}[5]{Colors.RESET} KNN (Custom)")
+    print(f"{Colors.BLUE}[6]{Colors.RESET} Classificatore Multiplo (Custom)")
+    print(f"{Colors.RED}[0]{Colors.RESET} Esci dal programma")
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 

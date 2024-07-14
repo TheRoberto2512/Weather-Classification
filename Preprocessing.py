@@ -5,7 +5,8 @@ from imblearn.over_sampling import SMOTE
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
 def load_dataset(raw=False, one_hot=True):
-    '''Funzione per caricare il dataset.
+    '''
+    Funzione per caricare il dataset.
     
     Parametri:
     - raw: booleano per decidere se caricare il dataset senza nessuna modifica (grezzo).
@@ -15,13 +16,13 @@ def load_dataset(raw=False, one_hot=True):
     dataset = pd.read_csv('weather_classification_data.csv') # import del dataset
     
     if raw:
-        return dataset # restituisce il dataset completo
+        return dataset                          # restituisce il dataset grezzo
     elif one_hot:
         dataset = pd.get_dummies(dataset, columns=['Cloud Cover', 'Season', 'Location'], drop_first=False)
         
-    y = dataset['Weather Type']                # target da predire
-    X = dataset.drop(['Weather Type'], axis=1) # rimozione del target dal dataset
-    return X, y                                # restituisce il dataset splittato in X e y
+    y = dataset['Weather Type']                 # target da predire
+    X = dataset.drop(['Weather Type'], axis=1)  # rimozione del target dal dataset
+    return X, y                                 # restituisce il dataset splittato in X e y
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
@@ -68,6 +69,7 @@ def load_smaller_dataset(X=None, y=None, ratio=0.5):
     Parametri:
     - ratio: percentuale di record da restituire (default: 0.5).
     '''
+    
     if X is None and y is None: # se non viene fornito un dataset
         X, y = load_dataset(one_hot=True)
     
@@ -84,6 +86,7 @@ def load_bigger_dataset(X=None, y=None, multiplier=2):
     Parametri:
     - multiplier: moltiplicatore per il numero di record (defeault: 2).
     '''
+    
     if X is None and y is None: # se non viene fornito un dataset
         X, y = load_dataset(one_hot=True)
     
@@ -103,7 +106,8 @@ def load_bigger_dataset(X=None, y=None, multiplier=2):
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
 def load_custom_dataset(apply_feature_selection=False, size="base", standardization=False):
-    '''Funzione per il caricamento del dataset con preprocessing personalizzato.
+    '''
+    Funzione per il caricamento del dataset con preprocessing personalizzato.
     
     Parametri:
     - apply_feature_selection: se True, verrà applicata la selezione delle feature (default: False).
@@ -156,7 +160,3 @@ def feature_selection(X=None, y=None):
     return X, y 
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
-
-if __name__ == '__main__':
-    X, y = load_custom_dataset(apply_feature_selection=False, size='big', standardization=True) # esempio di utilizzo della funzione
-    print(X.shape, y.shape) # stampa delle dimensioni del dataset

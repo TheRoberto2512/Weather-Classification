@@ -1,6 +1,6 @@
 from Imports import np, accuracy_score, classification_report, cross_validate, RANDOM_STATE
+from Shared_Utilities import chose_dataset, print_confusion_matrix, Colors
 from sklearn.tree import DecisionTreeClassifier
-from Shared_Utilities import chose_dataset, print_confusion_matrix
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
@@ -26,23 +26,23 @@ def decision_tree_main(dataset, depth=10, criterion="entropy", votazione="none")
 
     y_pred = clf.predict(X_test)                            # previsioni sul test set
     accuracy = accuracy_score(y_test, y_pred)               # calcolo dell'accuratezza
-
-       
+ 
     if votazione == "hard":
         return accuracy, y_pred
     elif votazione == "soft":
-        probabilità = clf.predict_proba(X_test)
-        return accuracy, np.array([dict(zip(classi, probs)) for probs in probabilità])
+        probabilita = clf.predict_proba(X_test)
+        return accuracy, np.array([dict(zip(classi, probs)) for probs in probabilita])
+        # restituisce l'accuratezza e un array di dizionari con le probabilità di appartenenza ad ogni classe
     else:
         report = classification_report(y_test, y_pred)      # report di classificazione
 
-        print(f'Accuratezza: {accuracy:.3}')
+        print(f'{Colors.GREEN}Accuratezza{Colors.RESET}: {accuracy:.3}')
         print('\nReport sulle performance:')
         print(report)
         
-        print_confusion_matrix(y_test, y_pred)
+        print_confusion_matrix(y_test, y_pred)              # stampa della matrice di confusione
         
-        input("\nPremere INVIO per continuare . . .")
+        input(f"\nPremere {Colors.ORNG}INVIO{Colors.RESET} per continuare . . .")
         return
             
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
@@ -75,7 +75,7 @@ def tuning_iperparametri():
     
     # indice della combinazione di iperparametri con l'accuratezza più alta
     i,j = np.unravel_index(np.argmax(accuracies, axis=None), accuracies.shape)
-    print("Miglior accuratezza: %.5f (Usando criterio \"%s\" e profondita' \"%s\")" % (accuracies[i][j], criterions[i], all_depths[j]) )
+    print(f"Miglior {Colors.GREEN}Accuratezza{Colors.RESET}: %.5f (Usando criterio \"%s\" e profondita' \"%s\")" % (accuracies[i][j], criterions[i], all_depths[j]) )
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
