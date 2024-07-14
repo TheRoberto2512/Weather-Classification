@@ -133,7 +133,7 @@ class CustomKNN(BaseEstimator):
         else:
             print("E' prima necessario addestrare il modello")
         
-    def score(self, X_test, y_test, votazione = "hard"):
+    def score(self, X_test, y_test):
         '''
         Metodo per calcolare l'accuratezza del modello.
         
@@ -144,7 +144,7 @@ class CustomKNN(BaseEstimator):
         '''
         
         if self.fittato:
-            pred_y = self.predict(X_test, votazione)
+            pred_y = self.predict(X_test, "hard")
             return accuracy_score(y_test, pred_y)
         else:
             print("E' prima necessario addestrare il modello")

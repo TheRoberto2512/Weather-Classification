@@ -86,7 +86,7 @@ def ensemble_bagging_main(dataset, votazione = "soft", pesata = True, bagging = 
         n_clf = len(pred_per_clf)
 
         # Inizializza un array per le medie delle probabilità
-        media_predizioni = np.zeros((n_istanze, len(class_labels)))
+        somma_predizioni = np.zeros((n_istanze, len(class_labels)))
 
         # Itera su ogni classificatore
         for clf in range(n_clf):
@@ -96,10 +96,10 @@ def ensemble_bagging_main(dataset, votazione = "soft", pesata = True, bagging = 
                 predizione = pred_per_clf[clf][istanza]
                 # Aggiungi le probabilità al totale
                 for j, classe in enumerate(class_labels):
-                    media_predizioni[istanza][j] += predizione[classe]
+                    somma_predizioni[istanza][j] += predizione[classe]
 
         # Calcola la media delle probabilità
-        media_predizioni /= n_clf
+        media_predizioni = somma_predizioni/n_clf
 
         # Trova la classe con la probabilità media più alta per ogni istanza
         pred_ensamble = [class_labels[np.argmax(pred)] for pred in media_predizioni]
