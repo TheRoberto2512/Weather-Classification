@@ -21,13 +21,12 @@ def SVM_main(dataset, C=1, kernel="linear", votazione = "none"):
     X_train, X_test, y_train, y_test = dataset              # recupero dei dati
 
     SVM = SVC(C=C, kernel=kernel, probability=True)         # inizializzazione del modello
-    classi = SVM.classes_
     SVM.fit(X_train, y_train)                               # addestramento del modello
+    classi = SVM.classes_
 
     y_pred = SVM.predict(X_test)                            # previsioni sul test set
-    accuracy = accuracy_score(y_test, y_pred)           # calcolo dell'accuratezza
+    accuracy = accuracy_score(y_test, y_pred)               # calcolo dell'accuratezza
 
-    
     if votazione == "hard":
         return accuracy, y_pred
     elif votazione == "soft":

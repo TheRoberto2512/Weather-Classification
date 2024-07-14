@@ -1,8 +1,7 @@
-from Preprocessing import load_dataset, load_standardized_dataset, load_smaller_dataset, load_bigger_dataset, load_custom_dataset
+from Preprocessing import load_dataset, load_standardized_dataset, load_smaller_dataset, load_bigger_dataset, load_custom_dataset, feature_selection
+from Imports import os, train_test_split, plt, sns, np, RANDOM_STATE
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import confusion_matrix
-from Imports import pd, os, train_test_split, plt, sns, np, RANDOM_STATE
-
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
@@ -12,7 +11,6 @@ class Colors():
     RESET = '\033[0m'           # colore di default
     BLUE = '\033[94m'           # colore blu
     ORNG = '\033[38;5;208m'     # colore arancione
-       
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
@@ -35,7 +33,8 @@ def chose_dataset():
         print("[2] Dataset standardizzato")
         print("[3] Dataset con meno records (50%)")
         print("[4] Dataset con più records  (200%)")
-        print("[5] Dataset con preprocessing personalizzato")
+        print("[5] Dataset con feature selection")
+        print("[6] Dataset con preprocessing personalizzato")
         print("[0] Torna al menu principale")
         scelta = input()
         
@@ -54,6 +53,9 @@ def chose_dataset():
             X, y = load_bigger_dataset()
             scelta = "scelto"
         elif scelta == "5":
+            X, y = feature_selection()
+            scelta = "scelto"
+        elif scelta == "6":
             X, y = chose_custom_dataset()
             if (X is None) & (y is None): # se non è stata effettuata una scelta
                 scelta = -1
@@ -77,6 +79,11 @@ def chose_custom_dataset():
         print("Scegliere la combinazione di pre-processing che si preferisce:")
         print("[1] Dataset con meno records (50%) + Standardizzazione")
         print("[2] Dataset con più records (200%) + Standardizzazione")
+        print("[3] Dataset con feature selection + Standardizzazione")
+        print("[4] Dataset con feature selection + meno records")
+        print("[5] Dataset con feature selection + più records")
+        print("[6] Dataset con feature selection + meno records + Standardizzazione")
+        print("[7] Dataset con feature selection + più records + Standardizzazione")
         print("[0] Torna indietro")
         scelta = input()
         
@@ -89,7 +96,19 @@ def chose_custom_dataset():
             X, y = load_custom_dataset(size="big", standardization=True)
             scelta = "scelto"
         elif scelta == "3":
-            pass
+            X, y = load_custom_dataset(apply_feature_selection=True, standardization=True)
+            scelta = "scelto"
+        elif scelta == "4":
+            X, y = load_custom_dataset(apply_feature_selection=True, size="small")
+            scelta = "scelto"
+        elif scelta == "5":
+            X, y = load_custom_dataset(apply_feature_selection=True, size="big")
+            scelta = "scelto"
+        elif scelta == "6":
+            X, y = load_custom_dataset(apply_feature_selection=True, size="small", standardization=True)
+            scelta = "scelto"
+        elif scelta == "7":
+            X, y = load_custom_dataset(apply_feature_selection=True, size="big", standardization=True)
             scelta = "scelto"
          
     clear_terminal()      

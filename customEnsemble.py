@@ -27,25 +27,26 @@ def ensemble_bagging_main(dataset, votazione = "soft", pesata = True, bagging = 
     print("\nPrese le predizioni del NaiveBayes")
     accuracy_Decision_Tree, pred_Decision_Tree = decision_tree_main(dataset = dataset, votazione = votazione)
     print("\nPrese le predizioni del Decision Tree")
-    #accuracy_SVM, pred_SVM = SVM_main(dataset = dataset, votazione = votazione)
+    accuracy_SVM, pred_SVM = SVM_main(dataset = dataset, votazione = votazione)
     print("\nPrese le predizioni del SVM")
 
     #Decidiamo quanto deve pesare il penso di ogni classificatore
     peso_KNN = (accuracy_KNN*100)**2
     peso_NaiveBayes = (accuracy_NaiveBayes*100)**2
     peso_Decision_Tree = (accuracy_Decision_Tree*100)**2
-    #peso_SVM = (accuracy_SVM*100)**2
+    peso_SVM = (accuracy_SVM*100)**2
+    
     # calcoliamo il contributo di ogni classificatore in base alla propria accuratezza 
     if (pesata) & (votazione == "soft"):
         pred_KNN = np.array([{classe: prob * peso_KNN for classe, prob in istanza.items()} for istanza in pred_KNN])
         pred_NaiveBayes = np.array([{classe: prob * peso_NaiveBayes for classe, prob in istanza.items()} for istanza in pred_NaiveBayes])
         pred_Decision_Tree = np.array([{classe: prob * peso_Decision_Tree for classe, prob in istanza.items()} for istanza in pred_Decision_Tree])
-        #pred_SVM = np.array([{classe: prob * peso_SVM for classe, prob in istanza.items()} for istanza in pred_SVM])
+        pred_SVM = np.array([{classe: prob * peso_SVM for classe, prob in istanza.items()} for istanza in pred_SVM])
         
     pesi = [peso_KNN, peso_NaiveBayes, peso_Decision_Tree]#, peso_SVM
 
     # assembliamo le varie predizioni, ottenendo una riga per ogni classificatore e in colonna le predizioni per istanza  
-    pred_per_clf = np.array([pred_KNN, pred_NaiveBayes, pred_Decision_Tree])#, pred_SVM
+    pred_per_clf = np.array([pred_KNN, pred_NaiveBayes, pred_Decision_Tree, pred_SVM])
 
     # sommiamo la singola vitazione per istanza dei classificatori
     if votazione == "hard":

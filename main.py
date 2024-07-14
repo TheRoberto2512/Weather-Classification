@@ -26,15 +26,25 @@ def interactiveMenu():
         elif scelta == "1":
             dataset_overview_menu()
         elif scelta == "2":
-            decision_tree_main(chose_dataset())
+            dataset = chose_dataset()
+            if dataset is not None:
+                decision_tree_main(dataset)
         elif scelta == "3":
-            naive_bayes_main(chose_dataset())
+            dataset = chose_dataset()
+            if dataset is not None:
+                naive_bayes_main(dataset)
         elif scelta == "4":
-            SVM_main(chose_dataset())
+            dataset = chose_dataset()
+            if dataset is not None:
+                SVM_main(dataset)
         elif scelta == "5":
-            custom_KNN_main(chose_dataset())
+            dataset = chose_dataset()
+            if dataset is not None:
+                custom_KNN_main(dataset)
         elif scelta == "6":
-            ensemble_bagging_main(chose_dataset())
+            dataset = chose_dataset()
+            if dataset is not None:
+                ensemble_bagging_main(dataset)
               
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
@@ -64,7 +74,6 @@ def printChoiches():
     print("[4] SVM")
     print("[5] KNN [Custom]")
     print("[6] Classificatore Multiplo")
-    print("[7] Confronto . . .")
     print("[0] Esci dal programma")
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #

@@ -97,7 +97,10 @@ def plot_class_distrib(df):
         print(f"Classe %s:\t%d" % (classe, counts[-1]))
     
     colors = ["#0070c0", "#595959", "#ffc001", "#cbcbcb"]
-    plt.bar(classi, counts, color=colors)
+    bars = plt.bar(classi, counts, color=colors)
+    for bar in bars:
+        yval = bar.get_height()
+        plt.text(bar.get_x() + bar.get_width()/2, yval, round(yval, 2), va='bottom', ha='center', color='black', size=10)
     plt.title("Distribuzione classi target")
     plt.show()
 
@@ -129,6 +132,6 @@ def print_boxplot(df):
     plt.show()
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
-# DA RIMUOVERE
+
 if __name__ == '__main__':
     dataset_overview_menu()
