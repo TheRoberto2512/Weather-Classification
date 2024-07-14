@@ -1,4 +1,4 @@
-from Preprocessing import load_dataset, load_standardized_dataset, load_smaller_dataset, load_bigger_dataset
+from Preprocessing import load_dataset, load_standardized_dataset, load_smaller_dataset, load_bigger_dataset, load_custom_dataset
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import confusion_matrix
 from Imports import pd, os, train_test_split, plt, sns, np, RANDOM_STATE
@@ -35,6 +35,7 @@ def chose_dataset():
         print("[2] Dataset standardizzato")
         print("[3] Dataset con meno records (50%)")
         print("[4] Dataset con più records  (200%)")
+        print("[5] Dataset con preprocessing personalizzato")
         print("[0] Torna al menu principale")
         scelta = input()
         
@@ -52,12 +53,47 @@ def chose_dataset():
         elif scelta == "4":
             X, y = load_bigger_dataset()
             scelta = "scelto"
-            pass
+        elif scelta == "5":
+            X, y = chose_custom_dataset()
+            if (X is None) & (y is None): # se non è stata effettuata una scelta
+                scelta = -1
+            else:
+                scelta = "scelto"
          
     clear_terminal()      
     (X_train, X_test, y_train, y_test) = train_test_split(X, y, test_size=0.2, random_state=RANDOM_STATE)
 
     return (X_train, X_test, y_train, y_test)
+
+# -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
+
+def chose_custom_dataset():
+    '''Funzione per la scelta del dataset con preprocessing personalizzato.'''
+    
+    scelta = -1 # scelta dell'utente
+    
+    while scelta != "scelto":
+        clear_terminal()
+        print("Scegliere la combinazione di pre-processing che si preferisce:")
+        print("[1] Dataset con meno records (50%) + Standardizzazione")
+        print("[2] Dataset con più records (200%) + Standardizzazione")
+        print("[0] Torna indietro")
+        scelta = input()
+        
+        if scelta == "0":
+            return None, None
+        elif scelta == "1":
+            X, y = load_custom_dataset(size="small", standardization=True)
+            scelta = "scelto"
+        elif scelta == "2":
+            X, y = load_custom_dataset(size="big", standardization=True)
+            scelta = "scelto"
+        elif scelta == "3":
+            pass
+            scelta = "scelto"
+         
+    clear_terminal()      
+    return X, y
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
