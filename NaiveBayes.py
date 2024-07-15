@@ -50,7 +50,7 @@ def tuning_iperparametri():
     '''Funzione per il tuning degli iperparametri del Naive Bayes.'''
     
     # iperparametro da testare
-    smoothing_values = [1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1]
+    smoothing_values = [1e-10, 1e-9, 1e-8, 1e-7, 1e-6, 1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1, 10, 100]
     
     # menu interattivo per scelta del dataset da usare per il tuning
     X_train, _, y_train, _ = chose_dataset()

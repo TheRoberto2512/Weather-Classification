@@ -51,7 +51,7 @@ def tuning_iperparametri():
     '''Funzione per il tuning degli iperparametri dell'SVM.'''
 
     # iperparametri da testare
-    kernels = ['linear', 'poly', 'rbf', 'sigmoid']
+    kernels = ['linear', 'poly', 'rbf']
     C_values = [1, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     
     # menu interattivo per scelta del dataset da usare per il tuning

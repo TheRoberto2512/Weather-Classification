@@ -1,5 +1,5 @@
-from Preprocessing import load_dataset, load_standardized_dataset, load_smaller_dataset, load_bigger_dataset, load_custom_dataset, feature_selection
-from Imports import os, train_test_split, plt, sns, np, RANDOM_STATE
+from Preprocessing import load_dataset, load_standardized_dataset, load_smaller_dataset, load_bigger_dataset, load_custom_dataset, feature_selection, naive_outliers_handling
+from Imports import os, plt, sns, np, train_test_split, RANDOM_STATE
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import confusion_matrix
 
@@ -37,6 +37,7 @@ def chose_dataset():
         print(f"{Colors.BLUE}[4]{Colors.RESET} Dataset con più records  (200%)")
         print(f"{Colors.BLUE}[5]{Colors.RESET} Dataset con feature selection")
         print(f"{Colors.BLUE}[6]{Colors.RESET} Dataset con preprocessing personalizzato")
+        print(f"{Colors.BLUE}[7]{Colors.RESET} Dataset senza outliers")
         print(f"{Colors.ORNG}[0]{Colors.RESET} Torna al menu principale")
         scelta = input()
         
@@ -63,6 +64,9 @@ def chose_dataset():
                 scelta = -1
             else:
                 scelta = "scelto"
+        elif scelta == "7":
+            X, y = naive_outliers_handling()
+            scelta = "scelto"
          
     clear_terminal()      
     (X_train, X_test, y_train, y_test) = train_test_split(X, y, test_size=0.2, random_state=RANDOM_STATE)

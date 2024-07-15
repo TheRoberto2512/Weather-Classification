@@ -67,6 +67,8 @@ def load_smaller_dataset(X=None, y=None, ratio=0.5):
     Funzione per caricare un dataset con meno record.
     
     Parametri:
+    - X: array di feature.
+    - y: array di target.
     - ratio: percentuale di record da restituire (default: 0.5).
     '''
     
@@ -84,6 +86,8 @@ def load_bigger_dataset(X=None, y=None, multiplier=2):
     Funzione per caricare un dataset con più record.
     
     Parametri:
+    - X: array di feature.
+    - y: array di target.
     - multiplier: moltiplicatore per il numero di record (defeault: 2).
     '''
     
@@ -91,13 +95,13 @@ def load_bigger_dataset(X=None, y=None, multiplier=2):
         X, y = load_dataset(one_hot=True)
     
     # in questo caso vogliamo RADDOPPIARE i records per ogni classe
-    dict_smo = {'Rainy': len(X[y == 'Rainy']) * multiplier,
+    dict_smote = {'Rainy': len(X[y == 'Rainy']) * multiplier,
                 'Sunny': len(X[y == 'Sunny']) * multiplier,
                 'Cloudy': len(X[y == 'Cloudy']) * multiplier,
                 'Snowy': len(X[y == 'Snowy']) * multiplier}
     
     # i records saranno generati sinteticamente da SMOTE
-    smote = SMOTE(random_state=RANDOM_STATE, sampling_strategy=dict_smo) # creo l'oggetto SMOTE
+    smote = SMOTE(random_state=RANDOM_STATE, sampling_strategy=dict_smote) # creo l'oggetto SMOTE
     
     X_over, y_over = smote.fit_resample(X, y) # applico l'oversampling
     
@@ -158,5 +162,41 @@ def feature_selection(X=None, y=None):
     # correlazioni molto alte con vari attributi, risultando ridondanti.
     
     return X, y 
+
+# -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
+
+def naive_outliers_handling(max_temp=50, records_per_class=6600):
+    '''Funzione per eliminare gli outliers dal dataset.
+    
+    Parametri:
+    - max_temp: temperatura massima ammissibile (default: 50°C).
+    - records_per_class: numero di record per classe (default: 6600).'''
+    
+    df = load_dataset(raw=True) # carico il dataset grezzo
+        
+    df = df.drop(df[df['Temperature'] > max_temp].index)        # valori di temperatura > 50°C non sono (quasi mai) possibili
+    df = df.drop(df[df['Humidity'] > 100].index)                # valori di umidità > 100% non sono possibili
+    df = df.drop(df[df['Precipitation (%)'] > 100].index)       # valori di precipitazione > 100% non sono possibili
+    df = df.drop(df[df['Atmospheric Pressure'] > 1050].index)   # valori di pressione > 1050 hPa non sono possibili
+    
+    # applica la hot encoding agli attributi categorici
+    df = pd.get_dummies(df, columns=['Cloud Cover', 'Season', 'Location'], drop_first=False)
+        
+    # suddivide in X e y
+    y = df['Weather Type']                 # target da predire
+    X = df.drop(['Weather Type'], axis=1)  # rimozione del target dal dataset
+    
+    # si vogliono pareggiare i records del dataset ampliato (×2)
+    dict_smote = {'Rainy': records_per_class, 'Sunny': records_per_class,
+                'Cloudy': records_per_class, 'Snowy': records_per_class}
+    
+    # i records saranno generati sinteticamente da SMOTE
+    smote = SMOTE(random_state=RANDOM_STATE, sampling_strategy=dict_smote) # creo l'oggetto SMOTE
+    
+    X, y = smote.fit_resample(X, y) # applico l'oversampling
+    
+    X, y = load_standardized_dataset(X, y) # carico il dataset standardizzato
+    
+    return X, y
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #

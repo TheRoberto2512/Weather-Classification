@@ -51,7 +51,7 @@ def tuning_iperparametri():
     '''Funzione per il tuning degli iperparametri del Decision Tree.'''
     
     # iperparametri da testare
-    criterions = ['gini', 'entropy'] ; all_depths = [i for i in range(1, 26)]
+    criterions = ['gini', 'entropy'] ; all_depths = [i for i in range(1, 21)]
 
     # menu interattivo per scelta del dataset da usare per il tuning
     X_train, _, y_train, _ = chose_dataset()

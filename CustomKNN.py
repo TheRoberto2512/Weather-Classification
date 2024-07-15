@@ -155,7 +155,7 @@ def tuning_iperparametri():
     '''Funzione per il tuning degli iperparametri del KNN custom.'''
     
     # iperparametri da testare
-    valori_k = [k for k in range(1, 26)]
+    valori_k = [k for k in range(1, 11)]
     misure_distanze = ["Euclidea", "Manhattan"]
 
     # menu interattivo per scelta del dataset da usare per il tuning
