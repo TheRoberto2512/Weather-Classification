@@ -1,10 +1,6 @@
-from Shared_Utilities import clear_terminal, chose_dataset, Colors
+from Shared_Utilities import clear_terminal, Colors
 from AnalisiDataset import dataset_overview_menu
-from CustomEnsemble import ensemble_bagging_main
-from DecisionTree import decision_tree_main
-from NaiveBayes import naive_bayes_main
-from CustomKNN import custom_KNN_main
-from SVM import SVM_main
+from Models import confronti, chose_model
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
@@ -25,26 +21,10 @@ def interactiveMenu():
         elif scelta == "1":
             dataset_overview_menu()
         elif scelta == "2":
-            dataset = chose_dataset()
-            if dataset is not None:
-                decision_tree_main(dataset)
+            chose_model()
         elif scelta == "3":
-            dataset = chose_dataset()
-            if dataset is not None:
-                naive_bayes_main(dataset)
-        elif scelta == "4":
-            dataset = chose_dataset()
-            if dataset is not None:
-                SVM_main(dataset)
-        elif scelta == "5":
-            dataset = chose_dataset()
-            if dataset is not None:
-                custom_KNN_main(dataset)
-        elif scelta == "6":
-            dataset = chose_dataset()
-            if dataset is not None:
-                ensemble_bagging_main(dataset)
-              
+            confronti()
+                     
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
 def printLogo():
@@ -67,14 +47,13 @@ def printChoiches():
     
     print("Scegliere un'opzione:")
     print(f"{Colors.BLUE}[1]{Colors.RESET} Analisi del dataset")
-    print(f"{Colors.BLUE}[2]{Colors.RESET} Decision Tree")
-    print(f"{Colors.BLUE}[3]{Colors.RESET} Naive Bayes")
-    print(f"{Colors.BLUE}[4]{Colors.RESET} SVM")
-    print(f"{Colors.BLUE}[5]{Colors.RESET} KNN (Custom)")
-    print(f"{Colors.BLUE}[6]{Colors.RESET} Classificatore Multiplo (Custom)")
+    print(f"{Colors.BLUE}[2]{Colors.RESET} Addestramento di un classificatore")
+    print(f"{Colors.BLUE}[3]{Colors.RESET} Confronto tra classificatori")
     print(f"{Colors.RED}[0]{Colors.RESET} Esci dal programma")
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
 if __name__ == '__main__':
     interactiveMenu()
+    
+''''''

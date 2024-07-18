@@ -43,7 +43,7 @@ def SVM_main(dataset, C=1, kernel="linear", votazione = "none"):
         print_confusion_matrix(y_test, y_pred)              # stampa della matrice di confusione
         
         input(f"\nPremere {Colors.ORNG}INVIO{Colors.RESET} per continuare . . .")
-        return
+        return None, None
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 

@@ -39,7 +39,7 @@ def custom_KNN_main(dataset, k=7, misura_distanza="Manhattan", votazione="none")
         print_confusion_matrix(y_test, y_pred)              # stampa della matrice di confusione
         
         input(f"\nPremere {Colors.ORNG}INVIO{Colors.RESET} per continuare . . .")
-        return
+        return None, None
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
   

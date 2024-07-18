@@ -15,7 +15,7 @@ def ensemble_bagging_main(dataset, votazione = "soft", pesata = True, bagging = 
     - dataset: tupla contenente i dati di training e di test già splittati.
     - votazione: tipologia di votazione da utilizzare.
     - pesata: se True, i contributi dei classificatori sono pesati in base all'accuratezza.
-    - bagging: se True, la funzione restituisce l'accuratezza del classificatore composto.
+    - bagging: se True, la funzione restituisce l'accuratezza e le predizioni.
     '''
     
     _, _, _, y_test = dataset
@@ -112,7 +112,7 @@ def ensemble_bagging_main(dataset, votazione = "soft", pesata = True, bagging = 
     print_confusion_matrix(y_test, pred_ensamble)          # stampa della matrice di confusione
     
     input(f"\nPremere {Colors.ORNG}INVIO{Colors.RESET} per continuare . . .")
-    return
+    return None
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 

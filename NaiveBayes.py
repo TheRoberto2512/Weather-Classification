@@ -42,7 +42,7 @@ def naive_bayes_main(dataset, var_smoothing = 0.001, votazione = "none"):
         print_confusion_matrix(y_test, y_pred)              # stampa della matrice di confusione
         
         input(f"\nPremere {Colors.ORNG}INVIO{Colors.RESET} per continuare . . .")
-        return
+        return None, None
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 

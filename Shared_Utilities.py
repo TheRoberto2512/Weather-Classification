@@ -23,7 +23,7 @@ def clear_terminal():
     
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def chose_dataset():
+def chose_dataset(return_name = False):
     '''Funzione per la scelta del dataset da utilizzare per l'addestramento del modello.'''
     
     scelta = -1 # scelta dell'utente
@@ -39,38 +39,43 @@ def chose_dataset():
         print(f"{Colors.BLUE}[6]{Colors.RESET} Dataset con preprocessing personalizzato")
         print(f"{Colors.BLUE}[7]{Colors.RESET} Dataset senza outliers")
         print(f"{Colors.ORNG}[0]{Colors.RESET} Torna al menu principale")
+        
+        name = ""
         scelta = input()
         
         if scelta == "0":
             return None
         elif scelta == "1":
             X, y = load_dataset(one_hot=True)
-            scelta = "scelto"
+            scelta = "scelto" ; name = "Originale"
         elif scelta == "2":
             X, y = load_standardized_dataset()
-            scelta = "scelto"
+            scelta = "scelto" ; name = "Standardizzato"
         elif scelta == "3":
             X, y = load_smaller_dataset()
-            scelta = "scelto"
+            scelta = "scelto" ; name = "Rimpicciolito"
         elif scelta == "4":
             X, y = load_bigger_dataset()
-            scelta = "scelto"
+            scelta = "scelto" ; name = "Ampliato"
         elif scelta == "5":
             X, y = feature_selection()
-            scelta = "scelto"
+            scelta = "scelto" ; name = "Feature Selection"
         elif scelta == "6":
             X, y = chose_custom_dataset()
             if (X is None) & (y is None): # se non è stata effettuata una scelta
                 scelta = -1
             else:
-                scelta = "scelto"
+                scelta = "scelto" ; name = "Personalizzato"
         elif scelta == "7":
             X, y = naive_outliers_handling()
-            scelta = "scelto"
+            scelta = "scelto" ; name = "No Outliers"
          
     clear_terminal()      
     (X_train, X_test, y_train, y_test) = train_test_split(X, y, test_size=0.2, random_state=RANDOM_STATE)
 
+    if return_name:
+        return (X_train, X_test, y_train, y_test), name
+    
     return (X_train, X_test, y_train, y_test)
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
