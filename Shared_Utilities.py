@@ -61,11 +61,11 @@ def chose_dataset(return_name = False):
             X, y = feature_selection()
             scelta = "scelto" ; name = "Feature Selection"
         elif scelta == "6":
-            X, y = chose_custom_dataset()
+            X, y, name = chose_custom_dataset()
             if (X is None) & (y is None): # se non è stata effettuata una scelta
                 scelta = -1
             else:
-                scelta = "scelto" ; name = "Personalizzato"
+                scelta = "scelto"
         elif scelta == "7":
             X, y = naive_outliers_handling()
             scelta = "scelto" ; name = "No Outliers"
@@ -103,28 +103,28 @@ def chose_custom_dataset():
             return None, None
         elif scelta == "1":
             X, y = load_custom_dataset(size="small", standardization=True)
-            scelta = "scelto"
+            scelta = "scelto" ; name = "Small+STD"
         elif scelta == "2":
             X, y = load_custom_dataset(size="big", standardization=True)
-            scelta = "scelto"
+            scelta = "scelto" ; name = "Big+STD"
         elif scelta == "3":
             X, y = load_custom_dataset(apply_feature_selection=True, standardization=True)
-            scelta = "scelto"
+            scelta = "scelto" ; name = "FS+STD"
         elif scelta == "4":
             X, y = load_custom_dataset(apply_feature_selection=True, size="small")
-            scelta = "scelto"
+            scelta = "scelto" ; name = "Small+STD"
         elif scelta == "5":
             X, y = load_custom_dataset(apply_feature_selection=True, size="big")
-            scelta = "scelto"
+            scelta = "scelto" ; name = "Big+FS"
         elif scelta == "6":
             X, y = load_custom_dataset(apply_feature_selection=True, size="small", standardization=True)
-            scelta = "scelto"
+            scelta = "scelto" ; name = "Small+FS+STD"
         elif scelta == "7":
             X, y = load_custom_dataset(apply_feature_selection=True, size="big", standardization=True)
-            scelta = "scelto"
+            scelta = "scelto" ; name = "Big+FS+STD"
          
     clear_terminal()      
-    return X, y
+    return X, y, name
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 

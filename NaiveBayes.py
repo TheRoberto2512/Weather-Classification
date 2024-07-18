@@ -4,7 +4,7 @@ from sklearn.naive_bayes import GaussianNB
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def naive_bayes_main(dataset, var_smoothing = 0.001, votazione = "none"):
+def naive_bayes_main(dataset, var_smoothing = 0.001, votazione = "none", show_results = True):
     '''
     Funzione per addestrare il Naive Bayes in base al dataset scelto.
     
@@ -32,7 +32,7 @@ def naive_bayes_main(dataset, var_smoothing = 0.001, votazione = "none"):
         probabilità = NB.predict_proba(X_test)
         return accuracy, np.array([dict(zip(classi, probs)) for probs in probabilità])
         # restituisce l'accuratezza e un array di dizionari con le probabilità di appartenenza ad ogni classe
-    else:
+    elif show_results:
         report = classification_report(y_test, y_pred)      # report di classificazione
 
         print(f'{Colors.GREEN}Accuratezza{Colors.RESET}: {accuracy:.3}')
@@ -42,7 +42,7 @@ def naive_bayes_main(dataset, var_smoothing = 0.001, votazione = "none"):
         print_confusion_matrix(y_test, y_pred)              # stampa della matrice di confusione
         
         input(f"\nPremere {Colors.ORNG}INVIO{Colors.RESET} per continuare . . .")
-        return None, None
+    return accuracy
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 

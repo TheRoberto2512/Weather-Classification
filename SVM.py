@@ -4,7 +4,7 @@ from sklearn.svm import SVC
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def SVM_main(dataset, C=1, kernel="linear", votazione = "none"):
+def SVM_main(dataset, C=1, kernel="linear", votazione = "none", show_results = True):
     '''
     Funzione per addestrare il Naive Bayes in base al dataset scelto.
     
@@ -33,7 +33,7 @@ def SVM_main(dataset, C=1, kernel="linear", votazione = "none"):
         probabilità = SVM.predict_proba(X_test)
         return accuracy, [dict(zip(classi, probs)) for probs in probabilità]
         # restituisce l'accuratezza e un array di dizionari con le probabilità di appartenenza ad ogni classe
-    else:
+    elif show_results:
         report = classification_report(y_test, y_pred)      # report di classificazione
 
         print(f'{Colors.GREEN}Accuratezza{Colors.RESET}: {accuracy:.3}')
@@ -43,7 +43,7 @@ def SVM_main(dataset, C=1, kernel="linear", votazione = "none"):
         print_confusion_matrix(y_test, y_pred)              # stampa della matrice di confusione
         
         input(f"\nPremere {Colors.ORNG}INVIO{Colors.RESET} per continuare . . .")
-        return None, None
+    return accuracy
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 

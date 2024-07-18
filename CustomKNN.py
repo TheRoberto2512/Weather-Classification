@@ -5,7 +5,7 @@ from sklearn.base import BaseEstimator
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def custom_KNN_main(dataset, k=7, misura_distanza="Manhattan", votazione="none"):
+def custom_KNN_main(dataset, k=7, misura_distanza="Manhattan", votazione="none", show_results=True):
     '''
     Funzione per addestrare il KNN in base al dataset scelto.
     
@@ -18,7 +18,6 @@ def custom_KNN_main(dataset, k=7, misura_distanza="Manhattan", votazione="none")
       - hard: il modello fa parte di un esemble e restituisce le sue predizioni.
       - soft: il modello fa parte di un esemble e restituisce le probabilità delle sue predizioni.
     '''
-    
     X_train, X_test, y_train, y_test = dataset              # recupero dei dati
     
     custom_knn = CustomKNN(k, misura_distanza)              # inizializzazione del modello
@@ -29,7 +28,7 @@ def custom_KNN_main(dataset, k=7, misura_distanza="Manhattan", votazione="none")
     if votazione != "none": 
         return accuracy, custom_knn.predict(X_test, votazione)
         # restituisce l'accuratezza e le predizioni o le probabilità di appartenenza ad ogni classe 
-    else:
+    elif show_results:
         report = classification_report(y_test, y_pred)      # report di classificazione
 
         print(f'{Colors.GREEN}Accuratezza{Colors.RESET}: {accuracy:.3}')
@@ -39,7 +38,7 @@ def custom_KNN_main(dataset, k=7, misura_distanza="Manhattan", votazione="none")
         print_confusion_matrix(y_test, y_pred)              # stampa della matrice di confusione
         
         input(f"\nPremere {Colors.ORNG}INVIO{Colors.RESET} per continuare . . .")
-        return None, None
+    return accuracy
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
   

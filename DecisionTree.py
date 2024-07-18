@@ -4,7 +4,7 @@ from sklearn.tree import DecisionTreeClassifier
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def decision_tree_main(dataset, depth=10, criterion="entropy", votazione="none"):
+def decision_tree_main(dataset, depth=10, criterion="entropy", votazione="none", show_results=True):
     '''
     Funzione per addestrare il DecisionTree in base al dataset scelto.
     
@@ -33,7 +33,7 @@ def decision_tree_main(dataset, depth=10, criterion="entropy", votazione="none")
         probabilita = clf.predict_proba(X_test)
         return accuracy, np.array([dict(zip(classi, probs)) for probs in probabilita])
         # restituisce l'accuratezza e un array di dizionari con le probabilità di appartenenza ad ogni classe
-    else:
+    elif show_results:
         report = classification_report(y_test, y_pred)      # report di classificazione
 
         print(f'{Colors.GREEN}Accuratezza{Colors.RESET}: {accuracy:.3}')
@@ -43,7 +43,7 @@ def decision_tree_main(dataset, depth=10, criterion="entropy", votazione="none")
         print_confusion_matrix(y_test, y_pred)              # stampa della matrice di confusione
         
         input(f"\nPremere {Colors.ORNG}INVIO{Colors.RESET} per continuare . . .")
-        return None, None
+    return accuracy
             
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 

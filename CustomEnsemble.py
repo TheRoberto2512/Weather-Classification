@@ -7,7 +7,7 @@ from SVM import SVM_main
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
-def ensemble_bagging_main(dataset, votazione = "soft", pesata = True, bagging = False):
+def ensemble_bagging_main(dataset, votazione = "soft", pesata = True, bagging = False, show_results=True):
     '''
     Funzione per addestrare un classificatore composto con il metodo di bagging.
     
@@ -17,7 +17,6 @@ def ensemble_bagging_main(dataset, votazione = "soft", pesata = True, bagging = 
     - pesata: se True, i contributi dei classificatori sono pesati in base all'accuratezza.
     - bagging: se True, la funzione restituisce l'accuratezza e le predizioni.
     '''
-    
     _, _, _, y_test = dataset
 
     # prendiamo le predizioni effettuate da ogni classificatore per istanza
@@ -102,16 +101,18 @@ def ensemble_bagging_main(dataset, votazione = "soft", pesata = True, bagging = 
         pred_ensamble = [class_labels[np.argmax(pred)] for pred in media_predizioni]
 
     accuracy = accuracy_score(y_test, pred_ensamble)       # calcolo dell'accuratezza
-    if bagging == True: return accuracy
-    report = classification_report(y_test, pred_ensamble)  # report di classificazione
+    if bagging == True:
+        return accuracy
+    elif show_results:
+        report = classification_report(y_test, pred_ensamble)  # report di classificazione
 
-    print(f'{Colors.GREEN}Accuratezza{Colors.RESET}: {accuracy:.3}')
-    print('\nReport sulle performance:')
-    print(report)
-    
-    print_confusion_matrix(y_test, pred_ensamble)          # stampa della matrice di confusione
-    
-    input(f"\nPremere {Colors.ORNG}INVIO{Colors.RESET} per continuare . . .")
+        print(f'{Colors.GREEN}Accuratezza{Colors.RESET}: {accuracy:.3}')
+        print('\nReport sulle performance:')
+        print(report)
+        
+        print_confusion_matrix(y_test, pred_ensamble)          # stampa della matrice di confusione
+        
+        input(f"\nPremere {Colors.ORNG}INVIO{Colors.RESET} per continuare . . .")
     return None
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #

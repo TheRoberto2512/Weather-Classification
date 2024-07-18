@@ -11,25 +11,21 @@ from Imports import plt
 def confronti():
     '''Funzione per confrontare i risultati dei vari classificatori.'''
     
-    nome1, acc1 = chose_model()
+    nome1, acc1 = chose_model(print_results=False)
     if nome1 == "NoChoice":
         return
     
-    nome2, acc2 = chose_model()
+    nome2, acc2 = chose_model(print_results=False)
     if nome2 == "NoChoice":
         return    
     
+    #print(nome1, nome2, acc1, acc2)
     plot_data(nome1, nome2, acc1, acc2)
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
 def chose_model(print_results=True):
     '''Funzione per scegliere e addestrare un modello.'''
-    
-    if print_results:
-        vot = "none"
-    else:
-        vot = "hard"
     
     scelta = -1 # scelta dell'utente
     
@@ -43,31 +39,31 @@ def chose_model(print_results=True):
         elif scelta == "1":
             dataset, dataset_name = chose_dataset(return_name=True)
             if dataset is not None:
-                acc, _ = decision_tree_main(dataset, votazione=vot)
+                acc = decision_tree_main(dataset, show_results=print_results)
                 name = "Decision Tree (" + dataset_name + ")"
                 return name, acc
         elif scelta == "2":
             dataset, dataset_name = chose_dataset(return_name=True)
             if dataset is not None:
-                acc, _ = naive_bayes_main(dataset, votazione=vot)
+                acc = naive_bayes_main(dataset, show_results=print_results)
                 name = "Naive Bayes (" + dataset_name + ")"
                 return name, acc
         elif scelta == "3":
             dataset, dataset_name = chose_dataset(return_name=True)
             if dataset is not None:
-                acc, _ =  SVM_main(dataset, votazione=vot)
+                acc =  SVM_main(dataset, show_results=print_results)
                 name = "SVM (" + dataset_name + ")"
                 return name, acc
         elif scelta == "4":
             dataset, dataset_name = chose_dataset(return_name=True)
             if dataset is not None:
-                acc, _ =  custom_KNN_main(dataset, votazione=vot)
+                acc =  custom_KNN_main(dataset, show_results=print_results)
                 name = "KNN (" + dataset_name + ")"
                 return name, acc
         elif scelta == "5":
             dataset, dataset_name = chose_dataset(return_name=True)
             if dataset is not None:
-                acc =  ensemble_bagging_main(dataset, votazione=vot, bagging=True)
+                acc =  ensemble_bagging_main(dataset, votazione="hard", bagging=True, show_results=print_results)
                 name = "Multiplo (" + dataset_name + ")"
                 return name, acc
 
@@ -95,15 +91,13 @@ def plot_data(nome1, nome2, acc1, acc2):
     
     for bar in bars:
         yval = bar.get_height()
-        plt.text(bar.get_x() + bar.get_width()/2.0, yval, round(yval, 2), va='bottom', ha='center', fontweight="bold")
+        plt.text(bar.get_x() + bar.get_width()/2.0, yval, round(yval, 3), va='bottom', ha='center', fontweight="bold")
     
     plt.title("%s VS %s" % (nome1, nome2), fontweight="bold")
     plt.xlabel("Classificatori")
     plt.ylabel("Accuratezza")
     plt.ylim([0, 1.05])
     plt.show()
-    
-    pass
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
