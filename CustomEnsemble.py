@@ -113,7 +113,7 @@ def ensemble_bagging_main(dataset, votazione = "soft", pesata = True, bagging = 
         print_confusion_matrix(y_test, pred_ensamble)          # stampa della matrice di confusione
         
         input(f"\nPremere {Colors.ORNG}INVIO{Colors.RESET} per continuare . . .")
-    return None
+    return accuracy
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 

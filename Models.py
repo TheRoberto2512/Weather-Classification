@@ -63,7 +63,7 @@ def chose_model(print_results=True):
         elif scelta == "5":
             dataset, dataset_name = chose_dataset(return_name=True)
             if dataset is not None:
-                acc =  ensemble_bagging_main(dataset, votazione="hard", bagging=True, show_results=print_results)
+                acc =  ensemble_bagging_main(dataset, votazione="hard", show_results=print_results)
                 name = "Multiplo (" + dataset_name + ")"
                 return name, acc
 
