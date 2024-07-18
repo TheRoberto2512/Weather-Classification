@@ -44,7 +44,7 @@ def chose_dataset(return_name = False):
         scelta = input()
         
         if scelta == "0":
-            return None
+            return None, None
         elif scelta == "1":
             X, y = load_dataset(one_hot=True)
             scelta = "scelto" ; name = "Originale"
@@ -87,15 +87,16 @@ def chose_custom_dataset():
     
     while scelta != "scelto":
         clear_terminal()
-        print("Scegliere la combinazione di pre-processing che si preferisce:")
-        print("[1] Dataset con meno records (50%) + Standardizzazione")
-        print("[2] Dataset con più records (200%) + Standardizzazione")
-        print("[3] Dataset con feature selection + Standardizzazione")
-        print("[4] Dataset con feature selection + meno records")
-        print("[5] Dataset con feature selection + più records")
-        print("[6] Dataset con feature selection + meno records + Standardizzazione")
-        print("[7] Dataset con feature selection + più records + Standardizzazione")
-        print("[0] Torna indietro")
+        print(f"Scegliere la combinazione di pre-processing che si preferisce:")
+        print(f"{Colors.BLUE}[1]{Colors.RESET} Dataset con meno records (50%) + Standardizzazione")
+        print(f"{Colors.BLUE}[2]{Colors.RESET} Dataset con più records (200%) + Standardizzazione")
+        print(f"{Colors.BLUE}[3]{Colors.RESET} Dataset con feature selection + Standardizzazione")
+        print(f"{Colors.BLUE}[4]{Colors.RESET} Dataset con feature selection + meno records")
+        print(f"{Colors.BLUE}[5]{Colors.RESET} Dataset con feature selection + più records")
+        print(f"{Colors.BLUE}[6]{Colors.RESET} Dataset con feature selection + meno records + Standardizzazione")
+        print(f"{Colors.BLUE}[7]{Colors.RESET} Dataset con feature selection + più records + Standardizzazione")
+        print(f"{Colors.ORNG}[0]{Colors.RESET} Torna indietro")
+        
         scelta = input()
         
         if scelta == "0":
