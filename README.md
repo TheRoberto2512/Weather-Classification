@@ -20,7 +20,7 @@
 ## **Istruzioni step-by-step:**   
 1) Scaricare i file dal repository GitHub tramite Git Clone o download diretto del file .zip;     
 
-2) <p align="justify">Aprire il terminale di Conda, spostarsi nella cartella contenente i file del progetto (basta anche solo <i>WP_requirements.yml</i>) e digitare il comando <code>conda env create -f WP_requirements.yml.</code> Questo creerà l'ambiente e darà inizio all'installazione di tutte le librerie necessarie per l esecuzione del progetto.</p>
+2) <p align="justify">Aprire il terminale di Conda, spostarsi nella cartella contenente i file del progetto (basta anche solo <i>WP_requirements.yml</i>) e digitare il comando <code>conda env create -f WP_requirements.yml</code>. Questo creerà l'ambiente e darà inizio all'installazione di tutte le librerie necessarie per l esecuzione del progetto.</p>
 
 3) <p align="justify">Una volta terminata l'installazione dell'ambiente e delle librerie è neccessario, qualora non lo si fosse già, dirigersi nella cartella contenente i file del progetto e attivare l'ambiente col comando <code>conda activate WeatherProject</code>.</p>
 
