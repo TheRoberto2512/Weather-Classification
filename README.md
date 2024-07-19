@@ -10,7 +10,7 @@
 
 <p align="justify">Il progetto indaga l'applicazione di tecniche di machine learning per la classificazione delle condizioni meteorologiche utilizzando un dataset tabellare sintetico. Il <a href="https://www.kaggle.com/datasets/nikhil7280/weather-type-classification">dataset</a> non rispecchia dati realistici, sono stati tutti generati sinteticamente includendo volutamente outliers e valori anomali. L'obiettivo principale è sviluppare un modello predittivo in grado di classificare con precisione diversi tipi di condizioni meteorologiche, quali sole, pioggia, neve e nuvolosità.</p>
 
-<p align="justify">Per maggiori informazioni sul progetto è possibile consultare il report finale a <a href="INSERIRE LINK">questo link<a>.</p>
+<p align="justify">Per maggiori informazioni sul progetto è possibile consultare il report finale a <a href="https://github.com/TheRoberto2512/Weather-Classification/blob/main/Relazione%20Finale.pdf">questo link<a>.</p>
 
 # Installazione 
 ## **Requisiti:**   
@@ -20,7 +20,7 @@
 ## **Istruzioni step-by-step:**   
 1) Scaricare i file dal repository GitHub tramite Git Clone o download diretto del file .zip;     
 
-2) <p align="justify">Aprire il terminale di Conda, spostarsi nella cartella contenente i file del progetto (basta anche solo <i>WP_requirements.yml</i>) e digitare il comando <code>conda env create -f WP_requirements.yml</code>. Questo creerà l'ambiente e darà inizio all'installazione di tutte le librerie necessarie per l esecuzione del progetto.</p>
+2) <p align="justify">Aprire il terminale di Conda, spostarsi nella cartella contenente i file del progetto (basta anche solo <i>WP_requirements.yml</i>) e digitare il comando <code>conda env create -f WP_requirements.yml</code>. Questo creerà l'ambiente e darà inizio all'installazione di tutte le librerie necessarie per l'esecuzione del progetto.</p>
 
 3) <p align="justify">Una volta terminata l'installazione dell'ambiente e delle librerie è neccessario, qualora non lo si fosse già, dirigersi nella cartella contenente i file del progetto e attivare l'ambiente col comando <code>conda activate WeatherProject</code>.</p>
 
@@ -66,4 +66,6 @@ Il progetto è stato organizzato in più file in base ai modelli e alle operazio
 </div>
 
 # Autori
-<a href="https://github.com/TheRoberto2512">Roberto A. Usai</a>, <a href="https://github.com/Cipe96">Marco Cipollina</a>, <a href="https://github.com/GabriDemu02">Gabriele Demurtas</a>, <a href="https://github.com/Chiaras97">Chiara Scalas</a> 
+<a href="https://github.com/theroberto2512/Weather-Classification/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=theroberto2512/Weather-Classification" />
+</a>
