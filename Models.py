@@ -1,6 +1,6 @@
 from Shared_Utilities import clear_terminal, chose_dataset, Colors
-from CustomEnsemble import ensemble_bagging_main
 from DecisionTree import decision_tree_main
+from CustomEnsemble import ensemble_main
 from NaiveBayes import naive_bayes_main
 from CustomKNN import custom_KNN_main
 from SVM import SVM_main
@@ -19,13 +19,17 @@ def confronti():
     if nome2 == "NoChoice":
         return    
     
-    #print(nome1, nome2, acc1, acc2)
     plot_data(nome1, nome2, acc1, acc2)
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
 def chose_model(print_results=True):
-    '''Funzione per scegliere e addestrare un modello.'''
+    '''
+    Funzione per scegliere e addestrare un modello.
+    
+    Parametri:
+    - print_results: se True, stampa i risultati del classificatore (default = True).
+    '''
     
     scelta = -1 # scelta dell'utente
     
@@ -36,41 +40,46 @@ def chose_model(print_results=True):
         
         if scelta == "0":
             return "NoChoice", 0
+        
         elif scelta == "1":
             dataset, dataset_name = chose_dataset(return_name=True)
             if dataset is not None:
                 acc = decision_tree_main(dataset, show_results=print_results)
                 name = "Decision Tree (" + dataset_name + ")"
                 return name, acc
+            
         elif scelta == "2":
             dataset, dataset_name = chose_dataset(return_name=True)
             if dataset is not None:
                 acc = naive_bayes_main(dataset, show_results=print_results)
                 name = "Naive Bayes (" + dataset_name + ")"
                 return name, acc
+            
         elif scelta == "3":
             dataset, dataset_name = chose_dataset(return_name=True)
             if dataset is not None:
                 acc =  SVM_main(dataset, show_results=print_results)
                 name = "SVM (" + dataset_name + ")"
                 return name, acc
+            
         elif scelta == "4":
             dataset, dataset_name = chose_dataset(return_name=True)
             if dataset is not None:
                 acc =  custom_KNN_main(dataset, show_results=print_results)
                 name = "KNN (" + dataset_name + ")"
                 return name, acc
+            
         elif scelta == "5":
             dataset, dataset_name = chose_dataset(return_name=True)
             if dataset is not None:
-                acc =  ensemble_bagging_main(dataset, votazione="hard", show_results=print_results)
+                acc =  ensemble_main(dataset, votazione="hard", show_results=print_results)
                 name = "Multiplo (" + dataset_name + ")"
                 return name, acc
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
 def print_model_choices():
-    '''Funzione per stampare i modelli disponibili.'''
+    '''Funzione per stampare la lista dei modelli disponibili.'''
         
     print("Scegli un modello:")
     print(f"{Colors.BLUE}[1]{Colors.RESET} Decision Tree")
@@ -79,13 +88,19 @@ def print_model_choices():
     print(f"{Colors.BLUE}[4]{Colors.RESET} KNN (Custom)")
     print(f"{Colors.BLUE}[5]{Colors.RESET} Classificatore Multiplo (Custom)")
     print(f"{Colors.ORNG}[0]{Colors.RESET} Torna indietro")
-    
-    pass
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
 def plot_data(nome1, nome2, acc1, acc2):
-    '''Funzione per plottare i risultati dei classificatori.'''
+    '''
+    Funzione per plottare i risultati dei classificatori.
+    
+    Parametri:
+    - nome1: string, nome del primo classificatore.
+    - nome2: string, nome del secondo classificatore.
+    - acc1: float, accuratezza del primo classificatore.
+    - acc2: float, accuratezza del secondo classificatore.
+    '''
     
     bars = plt.bar([nome1, nome2], [acc1, acc2], color=["#0070c0", "#ed7d31"])
     
@@ -100,6 +115,3 @@ def plot_data(nome1, nome2, acc1, acc2):
     plt.show()
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
-
-if __name__ == '__main__':
-    confronti()

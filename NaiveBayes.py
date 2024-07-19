@@ -15,6 +15,7 @@ def naive_bayes_main(dataset, var_smoothing = 0.001, votazione = "none", show_re
       - none: il modello non fa parte di un ensemble (default).
       - hard: il modello fa parte di un esemble e restituisce le sue predizioni.
       - soft: il modello fa parte di un esemble e restituisce le probabilità delle sue predizioni.
+    - show_results: se True, stampa i risultati del classificatore (default = True).
     '''
     
     X_train, X_test, y_train, y_test = dataset              # recupero dei dati
@@ -29,8 +30,8 @@ def naive_bayes_main(dataset, var_smoothing = 0.001, votazione = "none", show_re
     if votazione == "hard":
         return accuracy, y_pred
     elif votazione == "soft":
-        probabilità = NB.predict_proba(X_test)
-        return accuracy, np.array([dict(zip(classi, probs)) for probs in probabilità])
+        probabilita = NB.predict_proba(X_test)
+        return accuracy, np.array([dict(zip(classi, probs)) for probs in probabilita])
         # restituisce l'accuratezza e un array di dizionari con le probabilità di appartenenza ad ogni classe
     elif show_results:
         report = classification_report(y_test, y_pred)      # report di classificazione

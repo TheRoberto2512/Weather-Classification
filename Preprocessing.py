@@ -161,16 +161,20 @@ def feature_selection(X=None, y=None):
     # le varie colonne 'Cloud Cover_ . . .' e 'Humidity' in quanto presentano
     # correlazioni molto alte con vari attributi, risultando ridondanti.
     
+    # maggiori informazioni sulla feature selection sono presenti nella Relazione
+    
     return X, y 
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #
 
 def naive_outliers_handling(max_temp=50, records_per_class=6600):
-    '''Funzione per eliminare gli outliers dal dataset.
+    '''
+    Funzione per eliminare gli outliers dal dataset.
     
     Parametri:
     - max_temp: temperatura massima ammissibile (default: 50°C).
-    - records_per_class: numero di record per classe (default: 6600).'''
+    - records_per_class: numero di record per classe (default: 6600).
+    '''
     
     df = load_dataset(raw=True) # carico il dataset grezzo
         

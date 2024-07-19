@@ -50,16 +50,16 @@ def chose_dataset(return_name = False):
             scelta = "scelto" ; name = "Originale"
         elif scelta == "2":
             X, y = load_standardized_dataset()
-            scelta = "scelto" ; name = "Standardizzato"
+            scelta = "scelto" ; name = "STD"
         elif scelta == "3":
             X, y = load_smaller_dataset()
-            scelta = "scelto" ; name = "Rimpicciolito"
+            scelta = "scelto" ; name = "Small"
         elif scelta == "4":
             X, y = load_bigger_dataset()
-            scelta = "scelto" ; name = "Ampliato"
+            scelta = "scelto" ; name = "Big"
         elif scelta == "5":
             X, y = feature_selection()
-            scelta = "scelto" ; name = "Feature Selection"
+            scelta = "scelto" ; name = "FS"
         elif scelta == "6":
             X, y, name = chose_custom_dataset()
             if (X is None) & (y is None): # se non è stata effettuata una scelta
@@ -100,7 +100,7 @@ def chose_custom_dataset():
         scelta = input()
         
         if scelta == "0":
-            return None, None
+            return None, None, None
         elif scelta == "1":
             X, y = load_custom_dataset(size="small", standardization=True)
             scelta = "scelto" ; name = "Small+STD"

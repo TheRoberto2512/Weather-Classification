@@ -120,7 +120,9 @@ def plot_class_distrib(df):
         plt.text(bar.get_x() + bar.get_width()/2, yval, round(yval, 2), va='bottom', ha='center', color='black', size=10)
         # aggiungo il numero di elementi sopra ogni barra
         
-    plt.title("Distribuzione classi target")
+    plt.title("Distribuzione classi target", fontsize=15, fontweight='bold')
+    plt.xlabel("Classi")
+    plt.ylabel("Numero di elementi")
     plt.show()
 
 # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- # -- -- #

@@ -17,7 +17,9 @@ def custom_KNN_main(dataset, k=7, misura_distanza="Manhattan", votazione="none",
       - none: il modello non fa parte di un ensemble (default).
       - hard: il modello fa parte di un esemble e restituisce le sue predizioni.
       - soft: il modello fa parte di un esemble e restituisce le probabilità delle sue predizioni.
+    - show_results: se True, stampa i risultati del classificatore (default = True).
     '''
+    
     X_train, X_test, y_train, y_test = dataset              # recupero dei dati
     
     custom_knn = CustomKNN(k, misura_distanza)              # inizializzazione del modello

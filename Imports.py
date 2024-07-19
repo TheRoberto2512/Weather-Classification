@@ -1,4 +1,4 @@
-# -- Imports -- #
+# -- Imports condivisi tra i vari file -- #
 from sklearn.model_selection import train_test_split, cross_validate    # per la funzione per splittare il dataset e la funzione per la cross validation 
 from sklearn.metrics import accuracy_score, classification_report       # per le metriche di valutazione    
 import matplotlib.pyplot as plt                                         # per la libreria per i grafici                  

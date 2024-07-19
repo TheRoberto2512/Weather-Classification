@@ -16,6 +16,7 @@ def decision_tree_main(dataset, depth=10, criterion="entropy", votazione="none",
       - none: il modello non fa parte di un ensemble (default).
       - hard: il modello fa parte di un esemble e restituisce le sue predizioni.
       - soft: il modello fa parte di un esemble e restituisce le probabilità delle sue predizioni.
+    - show_results: se True, stampa i risultati del classificatore (default = True).
     '''
     
     X_train, X_test, y_train, y_test = dataset              # recupero dei dati
